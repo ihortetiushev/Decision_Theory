@@ -36,6 +36,8 @@ public class Main {
             System.out.println();
         }
 
+
+
         //Завдання 5
         System.out.println();
         int multiplication;

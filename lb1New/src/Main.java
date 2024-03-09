@@ -12,36 +12,62 @@ public class Main {
         toAnalyze.add(all.get(2));
         toAnalyze.add(all.get(4));
         toAnalyze.add(all.get(6));
+        System.out.println("Завдання 4");
 
         // Печать всех комбинаций критериев
+
+        System.out.println("Задані критерії: ");
+        printAnalyzeCriterion(toAnalyze);
+        System.out.println();
         List<List<ValueIndex>> allCombinations = getAllCombinations(toAnalyze);
 
         print(allCombinations, "All combinations");
 
-        System.out.println("Total: " + allCombinations.size());
+        System.out.println("Завдання 5");
+        System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
 
+        System.out.println();
+        System.out.println("Завдання 6");
+        System.out.println("Найкраща альтернатива: ");
+        System.out.println("Найгірша альтернатива: ");
 
         List<ValueIndex> middle = findMiddle(allCombinations);
 
         System.out.println("middle: " + middle);
 
+        System.out.println();
         List<List<ValueIndex>> betterOrSame = getBetterOrSame(allCombinations, middle);
-        print(betterOrSame, "Better or Same");
+        print(betterOrSame, "Кращі");
 
+        System.out.println();
         List<List<ValueIndex>> worse = getWorse(allCombinations, middle);
-        print(worse, "Worse");
+        print(worse, "Гірші");
 
 
+        System.out.println();
         List<List<ValueIndex>> others = getOthers(allCombinations, betterOrSame, worse);
-        print(others, "Others");
+        print(others, "Не порівняні");
 
+    }
+    public static void printAnalyzeCriterion(List<Criterion> toAnalyze){
+        for (Criterion criterion : toAnalyze) {
+            System.out.println(criterion);
+        }
     }
 
     private static void print(List<List<ValueIndex>> list, String header) {
         System.out.println(header);
         for (int i = 0; i < list.size(); i++) {
             System.out.print(i + 1 + " ");
-            System.out.println(list.get(i));
+            List<ValueIndex> row = list.get(i);
+            System.out.print("{");
+            for(int n = 0; n < row.size(); n++) {
+                //System.out.print((n + 1));
+                ValueIndex obj = row.get(n);
+                System.out.print("(k = " + (n + 1) + (obj.index + 1) + ")" + " \"" + obj.value + "\"; ");
+            }
+            System.out.println("}");
+           // System.out.println(row);
         }
     }
 

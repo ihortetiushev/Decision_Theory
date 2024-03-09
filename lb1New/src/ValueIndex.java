@@ -13,7 +13,7 @@ public class ValueIndex {
 
     @Override
     public String toString() {
-        return "k = " + (index + 1) + " " + value;
+        return "(k = " + (index + 1) + ")" + " \"" + value + "\"";
     }
 
     static boolean isBetterOrSame(List<Integer> result) {

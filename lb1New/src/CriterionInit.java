@@ -43,7 +43,7 @@ public class CriterionInit {
 
         criterion5.criterionName = "Відмовостійкість";
         criterion5.rate = 0.12;
-        criterion5.criterionValues.addAll(List.of("99.9%", "95%", "N/A"));
+        criterion5.criterionValues.addAll(List.of("99.9%", "≥ 95%", "N/A"));
         alternative.add(criterion5);
 
 
@@ -56,13 +56,13 @@ public class CriterionInit {
 
         criterion7.criterionName = "Максимальний час відгуку системи";
         criterion7.rate = 0.08;
-        criterion7.criterionValues.addAll(List.of("0.1 с", "0.3с", "0.5 с", "0.8с", "1.2 с"));
+        criterion7.criterionValues.addAll(List.of("0.1с", "0.3с", "0.5с", "0.8с", "1.2с"));
         alternative.add(criterion7);
 
 
         criterion8.criterionName = "Максимальна кількість користувачів одночасно";
         criterion8.rate = 0.07;
-        criterion8.criterionValues.addAll(List.of("150 000", "70000", "25 000", "1000"));
+        criterion8.criterionValues.addAll(List.of("150.000", "70.000", "25.000", "1.000"));
         alternative.add(criterion9);
 
 

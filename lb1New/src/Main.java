@@ -8,8 +8,8 @@ public class Main {
 
         List<Criterion> all = CriterionInit.initialize();
         List<Criterion> toAnalyze = new ArrayList<>();
-        toAnalyze.add(all.get(2));
-        toAnalyze.add(all.get(4));
+        toAnalyze.add(all.get(1));
+        toAnalyze.add(all.get(5));
         toAnalyze.add(all.get(6));
         System.out.println("Завдання 4");
 
@@ -25,6 +25,7 @@ public class Main {
         System.out.println();
         System.out.println("Завдання 5");
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
+        alternativesNum(toAnalyze);
 
         System.out.println();
         System.out.println("Завдання 6");
@@ -34,7 +35,7 @@ public class Main {
 
         System.out.println("Завдання 7");
         List<ValueIndex> middle = findMiddle(allCombinations);
-        System.out.println("middle: " + middle);
+        System.out.println("Вибрана альтернатива: " + middle);
 
         System.out.println();
         List<List<ValueIndex>> betterOrSame = getBetter(allCombinations, middle);
@@ -66,6 +67,22 @@ public class Main {
     public static void printAnalyzeCriterion(List<Criterion> toAnalyze){
         for (Criterion criterion : toAnalyze) {
             System.out.println(criterion);
+        }
+    }
+    public static void alternativesNum(List<Criterion> toAnalyze){
+        int size = toAnalyze.size();
+        int alternativesNum = 1;
+        for (int i = 0; i < size; i++) {
+            Criterion criterion = toAnalyze.get(i);
+            alternativesNum *= criterion.criterionValues.size();
+            System.out.print(criterion.criterionValues.size());
+
+            if (i < size - 1) {
+                System.out.print(" * ");
+            }
+            if(i == size - 1) {
+                System.out.println(" = " + alternativesNum);
+            }
         }
     }
 

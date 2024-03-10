@@ -5,15 +5,17 @@ public class ValueIndex {
 
     String value;
     int index;
+    int criterionNum;
 
-    ValueIndex(int index, String value) {
+    ValueIndex(int criterionNum, int index, String value) {
+        this.criterionNum = criterionNum;
         this.index = index;
         this.value = value;
     }
 
     @Override
     public String toString() {
-        return "(k = " + (index + 1) + ")" + " \"" + value + "\"";
+        return "(k = " + criterionNum + (index + 1) + ")" + " \"" + value + "\"";
     }
 
     static boolean isBetterOrSame(List<Integer> result) {

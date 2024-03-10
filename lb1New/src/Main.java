@@ -1,4 +1,3 @@
-import javax.script.Bindings;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.*;
@@ -23,20 +22,22 @@ public class Main {
 
         print(allCombinations, "All combinations");
 
+        System.out.println();
         System.out.println("Завдання 5");
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
 
         System.out.println();
         System.out.println("Завдання 6");
-        System.out.println("Найкраща альтернатива: ");
-        System.out.println("Найгірша альтернатива: ");
+        System.out.println("Найкраща альтернатива: " + allCombinations.get(0));
+        System.out.println("Найгірша альтернатива: " + allCombinations.get(allCombinations.size()-1));
+        System.out.println();
 
         List<ValueIndex> middle = findMiddle(allCombinations);
 
         System.out.println("middle: " + middle);
 
         System.out.println();
-        List<List<ValueIndex>> betterOrSame = getBetterOrSame(allCombinations, middle);
+        List<List<ValueIndex>> betterOrSame = getBetter(allCombinations, middle);
         print(betterOrSame, "Кращі");
 
         System.out.println();
@@ -45,10 +46,23 @@ public class Main {
 
 
         System.out.println();
-        List<List<ValueIndex>> others = getOthers(allCombinations, betterOrSame, worse);
+        List<List<ValueIndex>> others = getOthers(allCombinations, betterOrSame, worse, middle);
         print(others, "Не порівняні");
 
+        int counterBetter = betterOrSame.size();
+        int counterWorst = worse.size();
+        int counterNotComparable = others.size();
+        int totalNumberAlternatives = counterBetter + counterWorst + counterNotComparable + 1;
+        System.out.println();
+        System.out.println("Кількість кращих: " + counterBetter);
+        System.out.println("Кількість гірших: " + counterWorst);
+        System.out.println("Кількість не порівняних: " + counterNotComparable);
+        System.out.println("Загальна кількість альтернатив: " + counterBetter + " + " + counterWorst +
+                " + "+ counterNotComparable + " + 1 = " + totalNumberAlternatives);
+        System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
+        System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");
     }
+
     public static void printAnalyzeCriterion(List<Criterion> toAnalyze){
         for (Criterion criterion : toAnalyze) {
             System.out.println(criterion);
@@ -62,9 +76,8 @@ public class Main {
             List<ValueIndex> row = list.get(i);
             System.out.print("{");
             for(int n = 0; n < row.size(); n++) {
-                //System.out.print((n + 1));
                 ValueIndex obj = row.get(n);
-                System.out.print("(k = " + (n + 1) + (obj.index + 1) + ")" + " \"" + obj.value + "\"; ");
+                System.out.print("(k = " + obj.criterionNum + (obj.index + 1) + ")" + " \"" + obj.value + "\"; ");
             }
             System.out.println("}");
            // System.out.println(row);
@@ -102,7 +115,7 @@ public class Main {
         }).findFirst().orElseThrow();
     }
 
-    static List<List<ValueIndex>> getBetterOrSame(List<List<ValueIndex>> list, List<ValueIndex> toCompare) {
+    static List<List<ValueIndex>> getBetter(List<List<ValueIndex>> list, List<ValueIndex> toCompare) {
         List<List<ValueIndex>> betterOrSameList = new ArrayList<>();
         for (List<ValueIndex> current : list) {
             List<Integer> comparison = ValueIndex.compare(current, toCompare);
@@ -110,6 +123,7 @@ public class Main {
                 betterOrSameList.add(current);
             }
         }
+        betterOrSameList.remove(toCompare);
         return betterOrSameList;
     }
 
@@ -124,11 +138,13 @@ public class Main {
         return worseList;
     }
 
-    static List<List<ValueIndex>> getOthers(List<List<ValueIndex>> allList, List<List<ValueIndex>> betterList, List<List<ValueIndex>> worstList) {
+    static List<List<ValueIndex>> getOthers(List<List<ValueIndex>> allList, List<List<ValueIndex>> betterList,
+                             List<List<ValueIndex>> worstList, List<ValueIndex> middle) {
         List<List<ValueIndex>> others = new ArrayList<>(allList.size());
         others.addAll(allList);
         others.removeAll(betterList);
         others.removeAll(worstList);
+        others.remove(middle);
         return others;
     }
 
@@ -146,7 +162,7 @@ public class Main {
 
         List<String> criteria = objects.get(index).criterionValues;
         for (int i = 0; i < criteria.size(); i++) {
-            currentCombination.add(new ValueIndex(i, criteria.get(i)));
+            currentCombination.add(new ValueIndex(objects.get(index).criterionNum, i, criteria.get(i)));
             generateCombinations(objects, index + 1, currentCombination, allCombinations);
             currentCombination.remove(currentCombination.size() - 1);
         }

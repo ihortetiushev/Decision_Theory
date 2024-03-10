@@ -4,6 +4,7 @@ import java.util.List;
 public class Criterion {
     String criterionName;
     double rate;
+    int criterionNum;
     List<String> criterionValues = new ArrayList<>();
 
     @Override

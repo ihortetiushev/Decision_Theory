@@ -20,7 +20,7 @@ public class Main {
         System.out.println();
         List<List<ValueIndex>> allCombinations = getAllCombinations(toAnalyze);
 
-        print(allCombinations, "All combinations");
+        print(allCombinations, "Таблиця альтернатив");
 
         System.out.println();
         System.out.println("Завдання 5");

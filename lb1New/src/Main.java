@@ -32,8 +32,8 @@ public class Main {
         System.out.println("Найгірша альтернатива: " + allCombinations.get(allCombinations.size()-1));
         System.out.println();
 
+        System.out.println("Завдання 7");
         List<ValueIndex> middle = findMiddle(allCombinations);
-
         System.out.println("middle: " + middle);
 
         System.out.println();

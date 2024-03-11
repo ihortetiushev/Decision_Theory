@@ -12,9 +12,9 @@ public class Main {
         toAnalyze.add(all.get(0));
         toAnalyze.add(all.get(1));
         toAnalyze.add(all.get(2));
-        /*toAnalyze.add(all.get(3));
+        toAnalyze.add(all.get(3));
         toAnalyze.add(all.get(4));
-        toAnalyze.add(all.get(5));*/
+        toAnalyze.add(all.get(5));
         //toAnalyze.add(all.get(6));
         /*toAnalyze.add(all.get(7));*/
         //toAnalyze.add(all.get(8));

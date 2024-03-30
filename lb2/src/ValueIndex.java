@@ -2,7 +2,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ValueIndex {
-
     String value;
     int index;
     int criterionNum;
@@ -17,7 +16,9 @@ public class ValueIndex {
     public String toString() {
         return "(k = " + criterionNum + (index + 1) + ")" + " \"" + value + "\"";
     }
-
+    public static String fixedLengthString(String string, int length) {
+        return String.format("%1$-"+length+ "s", string);
+    }
     static boolean isBetterOrSame(List<Integer> result) {
         //better means all <=0
         boolean better = true;

@@ -7,10 +7,13 @@ public class Criterion {
     int criterionNum;
     List<String> criterionValues = new ArrayList<>();
 
+
+
+
     @Override
     public String toString() {
         return "Критерій: " + criterionName +
-                " (Оцінка: " + rate + ")" +
+                ", (Оцінка: " + rate + ")" +
                 ", Критеріальні значення: " + criterionValues +
                 '}';
     }

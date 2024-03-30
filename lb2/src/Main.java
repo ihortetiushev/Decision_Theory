@@ -1,9 +1,11 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class Main {
+    static int D = -1;
 
     public static void main(String[] args) {
 
@@ -14,22 +16,73 @@ public class Main {
         toAnalyze.add(all.get(2));
         toAnalyze.add(all.get(3));
         toAnalyze.add(all.get(4));
-        toAnalyze.add(all.get(5));
-        //toAnalyze.add(all.get(6));
-        /*toAnalyze.add(all.get(7));*/
-        //toAnalyze.add(all.get(8));
-        System.out.println("Завдання 4");
 
         // Печать всех комбинаций критериев
-
         System.out.println("Задані критерії: ");
         printAnalyzeCriterion(toAnalyze);
         System.out.println();
         List<List<ValueIndex>> allCombinations = getAllCombinations(toAnalyze);
 
+        List<ClassificationAlternatives> allClassification = new ArrayList<>();
+        List<ValueIndex> firstCombination = allCombinations.get(0);
+        List<ValueIndex> lastCombination = allCombinations.get(allCombinations.size()-1);
+        for(int i = 0; i < allCombinations.size(); i++) {
+            ClassificationAlternatives classification = new ClassificationAlternatives();
+            List<ValueIndex> valueIndex = allCombinations.get(i);
+            classification.valueIndex = valueIndex;
+
+            //знаходження G
+            if(i == 0) {
+                classification.G.add(1);
+            }
+            if(i == allCombinations.size() -1) {
+                classification.G.add(2);
+            }
+            if(!(i == 0) && !(i == allCombinations.size() -1)) {
+                classification.G.add(1);
+                classification.G.add(2);
+            }
+
+            for(int j = 0; j < valueIndex.size(); j++) {
+                int d1 = find_d(valueIndex, firstCombination);
+                int d2 = find_d(valueIndex, lastCombination);
+                if(j == 0 && D == -1){
+                    D = d2;
+                }
+
+                classification.d1 = d1;
+                classification.d2 = d2;
+                //double p2 = find_p2(valueIndex, firstCombination, lastCombination);
+                classification.p1 = find_p1(d1, d2);
+                classification.p2 = find_p2(d1, d2);
+            }
+
+            allClassification.add(classification);
+        }
+
+
+        //виводимо allClassification
+
+        for(int i = 0; i < allClassification.size(); i++) {
+            System.out.println(fixedLengthString((i + 1) + "", 2)  + allClassification.get(i));
+        }
+
+        //printAllClassification(allClassification);
+
+
+
         print(allCombinations, "Таблиця альтернатив");
 
-        System.out.println();
+
+
+        //getAllCombinations(toAnalyze).get(0);
+        // Вивід результату
+
+
+        //System.out.println("Таблиця альтернатив: " + formattedString + "'");
+
+
+        /*System.out.println();
         System.out.println("Завдання 5");
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
         alternativesNum(toAnalyze);
@@ -68,7 +121,36 @@ public class Main {
         System.out.println("Загальна кількість альтернатив: " + counterBetter + " + " + counterWorst +
                 " + "+ counterNotComparable + " + 1 = " + totalNumberAlternatives);
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
-        System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");
+        System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");*/
+    }
+
+    public static BigDecimal find_p1(int d1, int d2){
+        double p1 = (double)(D - d1) / (D - d1 + D - d2);
+        return BigDecimal.valueOf(p1).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public static BigDecimal find_p2(int d1, int d2){
+        double p2 = (double)(D - d2) / (D - d1 + D - d2);
+        return BigDecimal.valueOf(p2).setScale(2, RoundingMode.HALF_UP);
+    }
+
+    public static int find_d(List<ValueIndex> valueIndex, List<ValueIndex> firstOrLastCombination) {
+        int d = 0;
+        for(int i = 0; i < valueIndex.size(); i++) {
+            d += Math.abs((valueIndex.get(i).index) - firstOrLastCombination.get(i).index);
+        }
+        return d;
+    }
+
+    public static void printAllClassification(List<ClassificationAlternatives> allClassification) {
+        for(int i = 0; i < allClassification.size(); i++){
+            System.out.println(fixedLengthString((i + 1) + "" ,2 ) +
+                    fixedLengthString(allClassification.get(i).valueIndex.get(0).criterionNum + "", 5) +
+                    fixedLengthString(allClassification.get(i).valueIndex.get(1).criterionNum + "", 5));
+        }
+    }
+    public static String fixedLengthString(String string, int length) {
+        return String.format("%1$"+length+ "s", string);
     }
 
     public static void printAnalyzeCriterion(List<Criterion> toAnalyze){

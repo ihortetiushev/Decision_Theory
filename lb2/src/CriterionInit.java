@@ -10,84 +10,37 @@ public class CriterionInit {
         Criterion criterion3 = new Criterion();
         Criterion criterion4 = new Criterion();
         Criterion criterion5 = new Criterion();
-        Criterion criterion6 = new Criterion();
-        Criterion criterion7 = new Criterion();
-        Criterion criterion8 = new Criterion();
-        Criterion criterion9 = new Criterion();
-        Criterion criterion10 = new Criterion();
 
         criterion1.criterionName = "Підтримка";
         criterion1.rate = 0.14;
         criterion1.criterionNum = 1;
-        criterion1.criterionValues.addAll(List.of("цілодобова", "у робочий час", "відсутня"));
+        criterion1.criterionValues.addAll(List.of("цілодобова", "у робочий час"));
         alternative.add(criterion1);
 
-
-        criterion2.criterionName = "Вартість";
+        criterion2.criterionName = "Використання хмарних сервісів";
         criterion2.rate = 0.13;
         criterion2.criterionNum = 2;
-        criterion2.criterionValues.addAll(List.of("5000 у.о", "10000 у.о", "15000 у.о", "20000 у.о"));
+        criterion2.criterionValues.addAll(List.of("повне використання", "часткове використання"));
         alternative.add(criterion2);
 
-
-        criterion3.criterionName = "Використання хмарних сервісів";
-        criterion3.rate = 0.13;
+        criterion3.criterionName = "Максимальний час відгуку системи";
+        criterion3.rate = 0.08;
         criterion3.criterionNum = 3;
-        criterion3.criterionValues.addAll(List.of("повне використання", "часткове використання",
-                "не використовуються"));
+        criterion3.criterionValues.addAll(List.of("0.1с", "0.3с", "0.5с"));
         alternative.add(criterion3);
 
-
-        criterion4.criterionName = "Ступінь автоматизації масштабування";
+        criterion4.criterionName = "Вартість";
         criterion4.rate = 0.13;
         criterion4.criterionNum = 4;
-        criterion4.criterionValues.addAll(List.of("повна", "часткова", "відсутня"));
+        criterion4.criterionValues.addAll(List.of("5000 у.о", "10000 у.о", "15000 у.о", "20000 у.о"));
         alternative.add(criterion4);
-
 
         criterion5.criterionName = "Відмовостійкість";
         criterion5.rate = 0.12;
         criterion5.criterionNum = 5;
-        criterion5.criterionValues.addAll(List.of("99.9%", "≥ 95%", "N/A"));
+        criterion5.criterionValues.addAll(List.of("99.9%"));
         alternative.add(criterion5);
 
-
-        criterion6.criterionName = "Кібербезпека";
-        criterion6.rate = 0.1;
-        criterion6.criterionNum = 6;
-        criterion6.criterionValues.addAll(List.of("максимальний захист"
-                , "основний захист", "мінімальний захист"));
-        alternative.add(criterion6);
-
-
-        criterion7.criterionName = "Максимальний час відгуку системи";
-        criterion7.rate = 0.08;
-        criterion7.criterionNum = 7;
-        criterion7.criterionValues.addAll(List.of("0.1с", "0.3с", "0.5с", "0.8с", "1.2с"));
-        alternative.add(criterion7);
-
-
-        criterion8.criterionName = "Максимальна кількість користувачів одночасно";
-        criterion8.rate = 0.07;
-        criterion8.criterionNum = 8;
-        criterion8.criterionValues.addAll(List.of("150.000", "70.000", "25.000", "1.000"));
-        alternative.add(criterion9);
-
-
-        criterion9.criterionName = "Аналітика";
-        criterion9.rate = 0.06;
-        criterion9.criterionNum = 9;
-        criterion9.criterionValues.addAll(List.of("аналітика за будь-яким параметром системи масштабування"
-                , "аналітика за основними параметрами системи масштабування", "відсутня"));
-        alternative.add(criterion9);
-
-
-        criterion10.criterionName = "Моніторинг";
-        criterion10.rate = 0.04;
-        criterion10.criterionNum = 10;
-        criterion10.criterionValues.addAll(List.of("постійний"
-                , "нотифікація перевищення порогових значень", "відсутній"));
-        alternative.add(criterion10);
         return alternative;
     }
 }

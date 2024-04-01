@@ -10,7 +10,7 @@ public class ClassificationAlternatives {
     int d2;
     BigDecimal p1;
     BigDecimal p2;
-    int g1;
+    int g1 = 99;
     int g2;
     int F1;
     int F2;
@@ -24,8 +24,8 @@ public class ClassificationAlternatives {
                 fixedLengthString("d2 = " + d2 + "",10) +
                 fixedLengthString("p1 = " + p1 + "",12) +
                 fixedLengthString("p2 = " + p2 + "",12) +
-                /*", g1=" + g1 +
-                ", g2=" + g2 +
+                fixedLengthString("g1 = " + g1 + "",12) +
+                /*", g2=" + g2 +
                 ", F1=" + F1 +
                 ", F2=" + F2 +
                 ", F=" + F +*/

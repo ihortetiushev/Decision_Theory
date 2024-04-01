@@ -25,28 +25,28 @@ public class Main {
 
         List<ClassificationAlternatives> allClassification = new ArrayList<>();
         List<ValueIndex> firstCombination = allCombinations.get(0);
-        List<ValueIndex> lastCombination = allCombinations.get(allCombinations.size()-1);
-        for(int i = 0; i < allCombinations.size(); i++) {
+        List<ValueIndex> lastCombination = allCombinations.get(allCombinations.size() - 1);
+        for (int i = 0; i < allCombinations.size(); i++) {
             ClassificationAlternatives classification = new ClassificationAlternatives();
             List<ValueIndex> valueIndex = allCombinations.get(i);
             classification.valueIndex = valueIndex;
 
             //знаходження G
-            if(i == 0) {
+            if (i == 0) {
                 classification.G.add(1);
             }
-            if(i == allCombinations.size() -1) {
+            if (i == allCombinations.size() - 1) {
                 classification.G.add(2);
             }
-            if(!(i == 0) && !(i == allCombinations.size() -1)) {
+            if (!(i == 0) && !(i == allCombinations.size() - 1)) {
                 classification.G.add(1);
                 classification.G.add(2);
             }
 
-            for(int j = 0; j < valueIndex.size(); j++) {
+            for (int j = 0; j < valueIndex.size(); j++) {
                 int d1 = find_d(valueIndex, firstCombination);
                 int d2 = find_d(valueIndex, lastCombination);
-                if(j == 0 && D == -1){
+                if (j == 0 && D == -1) {
                     D = d2;
                 }
 
@@ -55,24 +55,26 @@ public class Main {
                 //double p2 = find_p2(valueIndex, firstCombination, lastCombination);
                 classification.p1 = find_p1(d1, d2);
                 classification.p2 = find_p2(d1, d2);
-            }
+                //classification.g1 = chooseMidP(valueIndex, classification.p1);
 
+            }
             allClassification.add(classification);
         }
-
+        //allCombinations.add(chooseMidP(allClassification));
+        chooseMidP(allClassification);
+        middleOfList(allCombinations, allClassification);
+        find_g(allCombinations, allClassification, chooseMidP(allClassification));
 
         //виводимо allClassification
 
-        for(int i = 0; i < allClassification.size(); i++) {
-            System.out.println(fixedLengthString((i + 1) + "", 2)  + allClassification.get(i));
+        for (int i = 0; i < allClassification.size(); i++) {
+            System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
         }
 
         //printAllClassification(allClassification);
 
 
-
         print(allCombinations, "Таблиця альтернатив");
-
 
 
         //getAllCombinations(toAnalyze).get(0);
@@ -124,41 +126,107 @@ public class Main {
         System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");*/
     }
 
-    public static BigDecimal find_p1(int d1, int d2){
-        double p1 = (double)(D - d1) / (D - d1 + D - d2);
+    public static void find_g(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
+        int count_Better = 0;
+
+        ClassificationAlternatives middleList = middleOfList(allCombinations, allClassification);
+        for (int i = 0; i < allClassification.size(); i++) {
+            //allClassification.get(i).g1 = 99;
+
+            if (i == 0 || i == allClassification.size() - 1) {
+                allClassification.get(i).g1 = 0;
+            }
+            /*if (i == allClassification.size() - 1) {
+                allClassification.get(i).g1 = 0;
+            }*/
+            if(allClassification.get(i).p1.compareTo(mid_p) > 0 && allClassification.get(i).p1.compareTo(BigDecimal.ONE) != 0) {
+                count_Better++;
+                allClassification.get(i).g1 = 0;
+            }
+            if(allClassification.get(i).p1.compareTo(mid_p) == 0) {
+                allClassification.get(i).g1 = 1;
+            }
+
+        }
+
+        middleList.g1 = count_Better;
+    }
+
+    public static ClassificationAlternatives middleOfList(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification) {
+        BigDecimal midP = chooseMidP(allClassification);
+        int middleRow = allCombinations.size() / 2;
+        for (int i = middleRow; i > 0; i--) {
+            if(allClassification.get(i).p1.compareTo(midP) == 0) {
+                return allClassification.get(i);
+            }
+        }
+        throw new IllegalStateException("Exception");
+    }
+
+
+    /*public static List<ClassificationAlternatives> middleOfList(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification) {
+        BigDecimal midP = chooseMidP(allClassification);
+        int middleRow = allCombinations.size() / 2;
+        for (int i = middleRow; i > 0; i--) {
+            if(allCombinations.get(i).p1.compareTo(midP) == 0) {
+                return allClassification.get(i);
+            }
+        }
+        throw new IllegalStateException("Exception");
+    }*/
+
+
+    public static BigDecimal chooseMidP(List<ClassificationAlternatives> allClassification) {
+        BigDecimal middle = allClassification.get(0).p1;
+        BigDecimal middleReference = BigDecimal.valueOf(0.5);
+
+        for (ClassificationAlternatives classification : allClassification) {
+            if (classification.p1.subtract(middleReference).abs().compareTo(middle.subtract(middleReference).abs()) <= 0 && classification.p1.compareTo(middleReference) >= 0) {
+                middle = classification.p1;
+            }
+
+        }
+
+        return middle;
+    }
+
+    public static BigDecimal find_p1(int d1, int d2) {
+        double p1 = (double) (D - d1) / (D - d1 + D - d2);
         return BigDecimal.valueOf(p1).setScale(2, RoundingMode.HALF_UP);
     }
 
-    public static BigDecimal find_p2(int d1, int d2){
-        double p2 = (double)(D - d2) / (D - d1 + D - d2);
+    public static BigDecimal find_p2(int d1, int d2) {
+        double p2 = (double) (D - d2) / (D - d1 + D - d2);
         return BigDecimal.valueOf(p2).setScale(2, RoundingMode.HALF_UP);
     }
 
     public static int find_d(List<ValueIndex> valueIndex, List<ValueIndex> firstOrLastCombination) {
         int d = 0;
-        for(int i = 0; i < valueIndex.size(); i++) {
+        for (int i = 0; i < valueIndex.size(); i++) {
             d += Math.abs((valueIndex.get(i).index) - firstOrLastCombination.get(i).index);
         }
         return d;
     }
 
     public static void printAllClassification(List<ClassificationAlternatives> allClassification) {
-        for(int i = 0; i < allClassification.size(); i++){
-            System.out.println(fixedLengthString((i + 1) + "" ,2 ) +
+        for (int i = 0; i < allClassification.size(); i++) {
+            System.out.println(fixedLengthString((i + 1) + "", 2) +
                     fixedLengthString(allClassification.get(i).valueIndex.get(0).criterionNum + "", 5) +
                     fixedLengthString(allClassification.get(i).valueIndex.get(1).criterionNum + "", 5));
         }
     }
+
     public static String fixedLengthString(String string, int length) {
-        return String.format("%1$"+length+ "s", string);
+        return String.format("%1$" + length + "s", string);
     }
 
-    public static void printAnalyzeCriterion(List<Criterion> toAnalyze){
+    public static void printAnalyzeCriterion(List<Criterion> toAnalyze) {
         for (Criterion criterion : toAnalyze) {
             System.out.println(criterion);
         }
     }
-    public static void alternativesNum(List<Criterion> toAnalyze){
+
+    public static void alternativesNum(List<Criterion> toAnalyze) {
         int size = toAnalyze.size();
         int alternativesNum = 1;
         for (int i = 0; i < size; i++) {
@@ -169,7 +237,7 @@ public class Main {
             if (i < size - 1) {
                 System.out.print(" * ");
             }
-            if(i == size - 1) {
+            if (i == size - 1) {
                 System.out.println(" = " + alternativesNum);
             }
         }
@@ -181,12 +249,12 @@ public class Main {
             System.out.print(i + 1 + " ");
             List<ValueIndex> row = list.get(i);
             System.out.print("{");
-            for(int n = 0; n < row.size(); n++) {
+            for (int n = 0; n < row.size(); n++) {
                 ValueIndex obj = row.get(n);
                 System.out.print("(k = " + obj.criterionNum + (obj.index + 1) + ")" + " \"" + obj.value + "\"; ");
             }
             System.out.println("}");
-           // System.out.println(row);
+            // System.out.println(row);
         }
     }
 
@@ -245,7 +313,7 @@ public class Main {
     }
 
     static List<List<ValueIndex>> getOthers(List<List<ValueIndex>> allList, List<List<ValueIndex>> betterList,
-                             List<List<ValueIndex>> worstList, List<ValueIndex> middle) {
+                                            List<List<ValueIndex>> worstList, List<ValueIndex> middle) {
         List<List<ValueIndex>> others = new ArrayList<>(allList.size());
         others.addAll(allList);
         others.removeAll(betterList);

@@ -63,7 +63,8 @@ public class Main {
         //allCombinations.add(chooseMidP(allClassification));
         chooseMidP(allClassification);
         middleOfList(allCombinations, allClassification);
-        find_g(allCombinations, allClassification, chooseMidP(allClassification));
+        find_g1(allCombinations, allClassification, chooseMidP(allClassification));
+        //find_g2(allCombinations, allClassification, chooseMidP(allClassification));
 
         //виводимо allClassification
 
@@ -125,28 +126,83 @@ public class Main {
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
         System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");*/
     }
-
-    public static void find_g(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
+    public static void find_g2(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
         int count_Better = 0;
-
+        int count_Worst = 0;
         ClassificationAlternatives middleList = middleOfList(allCombinations, allClassification);
         for (int i = 0; i < allClassification.size(); i++) {
-            //allClassification.get(i).g1 = 99;
+            if (i == 0 || i == allClassification.size() - 1) {
+                allClassification.get(i).g2 = 0;
+            }
+            if(allClassification.get(i).p1.compareTo(mid_p) < 0 && allClassification.get(i).p1.compareTo(BigDecimal.ONE) != 0) {
+                count_Better++;
+                allClassification.get(i).g2 = 0;
+            }
+            if(allClassification.get(i).p1.compareTo(mid_p) == 0) {
+                allClassification.get(i).g2 = 1;
+                count_Worst++;
+            }
+        }
+        /*for (int i = 0; i < allClassification.size(); i++) {
+            if (i == 0 || i == allClassification.size() - 1) {
+                if(allClassification.get(i).p1.compareTo(mid_p) > 0 && allClassification.get(i).p1.compareTo(BigDecimal.ONE) != 0) {
+                    count_Better++;
 
+                }
+                if(allClassification.get(i).p1.compareTo(mid_p) == 0) {
+
+                    count_Worst++;
+                }
+            }
+            else{
+                allClassification.get(i).g1 = count_Worst + count_Better;
+            }
+        }*/
+
+        middleList.g1 = count_Better;
+    }
+
+
+    public static void find_g1(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
+        int count_Better = 0;
+        int count_Worst = 0;
+        ClassificationAlternatives middleList = middleOfList(allCombinations, allClassification);
+        for (int i = 0; i < allClassification.size(); i++) {
             if (i == 0 || i == allClassification.size() - 1) {
                 allClassification.get(i).g1 = 0;
             }
-            /*if (i == allClassification.size() - 1) {
-                allClassification.get(i).g1 = 0;
-            }*/
             if(allClassification.get(i).p1.compareTo(mid_p) > 0 && allClassification.get(i).p1.compareTo(BigDecimal.ONE) != 0) {
                 count_Better++;
                 allClassification.get(i).g1 = 0;
             }
             if(allClassification.get(i).p1.compareTo(mid_p) == 0) {
                 allClassification.get(i).g1 = 1;
+                count_Worst++;
+            }
+        }
+
+        for (int i = 0; i < allClassification.size(); i++) {
+            if (i == 0 || i == allClassification.size() - 1) {
+                if (allClassification.get(i).p1.compareTo(mid_p) > 0 && allClassification.get(i).p1.compareTo(BigDecimal.ONE) != 0) {
+                    count_Better++;
+
+                }
+
+                if (allClassification.get(i).p1.compareTo(mid_p) == 0) {
+                    count_Worst++;
+                }
             }
 
+            if(allClassification.get(i).p1.compareTo(mid_p) < 0 ) {
+                if(i != allClassification.size() - 1) {
+                    allClassification.get(i).g1 = count_Worst + count_Better;
+                }
+                //allClassification.get(i).g1 = count_Worst + count_Better;
+            }
+
+            /*else {
+                allClassification.get(i).g1 = count_Worst + count_Better;
+            }*/
         }
 
         middleList.g1 = count_Better;

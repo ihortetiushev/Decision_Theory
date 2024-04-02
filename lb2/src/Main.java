@@ -166,13 +166,17 @@ public class Main {
     public static void find_g1(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
         int count_Better = 0;
         int count_Worst = 0;
+        BigDecimal middleIndex = BigDecimal.valueOf(21);
+        int middle_index = 21;
         ClassificationAlternatives middleList = middleOfList(allCombinations, allClassification);
         for (int i = 0; i < allClassification.size(); i++) {
             if (i == 0 || i == allClassification.size() - 1) {
                 allClassification.get(i).g1 = 0;
             }
             if(allClassification.get(i).p1.compareTo(mid_p) > 0 && allClassification.get(i).p1.compareTo(BigDecimal.ONE) != 0) {
-                count_Better++;
+                if(i < middle_index){
+                    count_Better++;
+                }
                 allClassification.get(i).g1 = 0;
             }
             if(allClassification.get(i).p1.compareTo(mid_p) == 0) {
@@ -182,27 +186,11 @@ public class Main {
         }
 
         for (int i = 0; i < allClassification.size(); i++) {
-            if (i == 0 || i == allClassification.size() - 1) {
-                if (allClassification.get(i).p1.compareTo(mid_p) > 0 && allClassification.get(i).p1.compareTo(BigDecimal.ONE) != 0) {
-                    count_Better++;
-
-                }
-
-                if (allClassification.get(i).p1.compareTo(mid_p) == 0) {
-                    count_Worst++;
-                }
-            }
-
             if(allClassification.get(i).p1.compareTo(mid_p) < 0 ) {
                 if(i != allClassification.size() - 1) {
                     allClassification.get(i).g1 = count_Worst + count_Better;
                 }
-                //allClassification.get(i).g1 = count_Worst + count_Better;
             }
-
-            /*else {
-                allClassification.get(i).g1 = count_Worst + count_Better;
-            }*/
         }
 
         middleList.g1 = count_Better;

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class Main {
     static int D = -1;
 
@@ -65,6 +66,9 @@ public class Main {
         middleOfList(allCombinations, allClassification);
         find_g1(allCombinations, allClassification, chooseMidP(allClassification));
         find_g2(allCombinations, allClassification, chooseMidP(allClassification));
+        findF1(allClassification);
+        findF2(allClassification);
+        findF(allClassification);
 
         //виводимо allClassification
 
@@ -126,9 +130,30 @@ public class Main {
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
         System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");*/
     }
+    public static void findF(List<ClassificationAlternatives> allClassification) {
+        for (int i = 0; i < allClassification.size(); i++) {
+            BigDecimal f = allClassification.get(i).F1.multiply(allClassification.get(i).F2);
+            allClassification.get(i).F = f.setScale(2, RoundingMode.HALF_UP);
+        }
+
+    }
+    public static void findF2(List<ClassificationAlternatives> allClassification) {
+        for (int i = 0; i < allClassification.size(); i++) {
+            BigDecimal g2BigDecimal = BigDecimal.valueOf(allClassification.get(i).g2);
+            allClassification.get(i).F2 = allClassification.get(i).p2.multiply(g2BigDecimal);
+        }
+
+    }
+    public static void findF1(List<ClassificationAlternatives> allClassification) {
+        for (int i = 0; i < allClassification.size(); i++) {
+            BigDecimal g1BigDecimal = BigDecimal.valueOf(allClassification.get(i).g1);
+            allClassification.get(i).F1 = allClassification.get(i).p1.multiply(g1BigDecimal);
+        }
+
+    }
     public static void find_g2(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
         int count_Better = 0;
-        int count_Worst = 0;
+        int count_as_mid = 0;
         BigDecimal middleIndex = BigDecimal.valueOf(21);
         int middle_index = 21;
         ClassificationAlternatives middleList = middleOfList(allCombinations, allClassification);
@@ -137,32 +162,34 @@ public class Main {
                 allClassification.get(i).g2 = 0;
             }
             if(allClassification.get(i).p2.compareTo(mid_p) > 0 && allClassification.get(i).p2.compareTo(BigDecimal.ONE) != 0) {
-                if(i > middle_index){
-                    count_Better++;
-                }
                 allClassification.get(i).g2 = 0;
             }
             if(allClassification.get(i).p2.compareTo(mid_p) == 0) {
                 allClassification.get(i).g2 = 1;
-                count_Worst++;
+                count_as_mid++;
+            }
+
+            if(i > middle_index && allClassification.get(i).p2.compareTo(mid_p) > 0) {
+                if(i != allClassification.size() - 1) {
+                    count_Better++;
+                }
             }
         }
 
-        /*for (int i = 0; i < allClassification.size(); i++) {
+        for (int i = 0; i < allClassification.size(); i++) {
             if(allClassification.get(i).p2.compareTo(mid_p) < 0 ) {
-                if(i != allClassification.size() - 1) {
-                    allClassification.get(i).g2 = count_Worst + count_Better;
+                if(i != allClassification.size() - 1 && i!= 0) {
+                    allClassification.get(i).g2 = count_as_mid + count_Better;
                 }
             }
-        }*/
-
+        }
         middleList.g2 = count_Better;
     }
 
 
     public static void find_g1(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
         int count_Better = 0;
-        int count_Worst = 0;
+        int count_as_mid = 0;
         BigDecimal middleIndex = BigDecimal.valueOf(21);
         int middle_index = 21;
         ClassificationAlternatives middleList = middleOfList(allCombinations, allClassification);
@@ -178,14 +205,14 @@ public class Main {
             }
             if(allClassification.get(i).p1.compareTo(mid_p) == 0) {
                 allClassification.get(i).g1 = 1;
-                count_Worst++;
+                count_as_mid++;
             }
         }
 
         for (int i = 0; i < allClassification.size(); i++) {
             if(allClassification.get(i).p1.compareTo(mid_p) < 0 ) {
-                if(i != allClassification.size() - 1) {
-                    allClassification.get(i).g1 = count_Worst + count_Better;
+                if(i != allClassification.size() - 1 && i!= 0) {
+                    allClassification.get(i).g1 = count_as_mid + count_Better;
                 }
             }
         }

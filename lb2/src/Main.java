@@ -142,6 +142,7 @@ public class Main {
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
         System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");*/
     }
+
     public static void find_G_secondIteration(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {
             if (allClassification.get(i).F.equals(maxF(allClassification))) {

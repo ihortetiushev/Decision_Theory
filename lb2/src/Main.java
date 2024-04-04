@@ -27,6 +27,7 @@ public class Main {
         List<ClassificationAlternatives> allClassification = new ArrayList<>();
         List<ValueIndex> firstCombination = allCombinations.get(0);
         List<ValueIndex> lastCombination = allCombinations.get(allCombinations.size() - 1);
+        //перша ітерація
         for (int i = 0; i < allCombinations.size(); i++) {
             ClassificationAlternatives classification = new ClassificationAlternatives();
             List<ValueIndex> valueIndex = allCombinations.get(i);
@@ -70,16 +71,27 @@ public class Main {
         findF2(allClassification);
         findF(allClassification);
 
-        //виводимо allClassification
+        System.out.println("Перша ітерація");
+        //виводимо першу ітерацію allClassification
+        for (int i = 0; i < allClassification.size(); i++) {
+            System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
+        }
+        System.out.println();
 
+        System.out.println("Друга ітерація");
+
+        find_G_secondIteration(allClassification);
+        //виводимо другу ітерацію allClassification
         for (int i = 0; i < allClassification.size(); i++) {
             System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
         }
 
+
+
+
+
         //printAllClassification(allClassification);
-
-
-        print(allCombinations, "Таблиця альтернатив");
+        //print(allCombinations, "Таблиця альтернатив");
 
 
         //getAllCombinations(toAnalyze).get(0);
@@ -130,19 +142,44 @@ public class Main {
         System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
         System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");*/
     }
+    public static void find_G_secondIteration(List<ClassificationAlternatives> allClassification) {
+        for (int i = 0; i < allClassification.size(); i++) {
+            if (allClassification.get(i).F.equals(maxF(allClassification))) {
+                allClassification.get(i).G.clear();
+                allClassification.get(i).G.add(1);
+            }
+            if(allClassification.get(i).p1.compareTo(chooseMidP(allClassification)) > 0) {
+                allClassification.get(i).G.clear();
+                allClassification.get(i).G.add(1);
+            }
+        }
+    }
+    public static BigDecimal maxF(List<ClassificationAlternatives> allClassification) {
+        /*for(int i = 0; i < allClassification.size(); i++) {
+            allClassification.get(i).F
+        }*/
+
+
+        BigDecimal maxF = allClassification.get(0).F;
+        for(int i = 1; i < allClassification.size(); i++) {
+            BigDecimal currentF = allClassification.get(i).F;
+            if (currentF.compareTo(maxF) > 0) {
+                maxF = currentF;
+            }
+        }
+        return maxF;
+    }
     public static void findF(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {
             BigDecimal f = allClassification.get(i).F1.multiply(allClassification.get(i).F2);
             allClassification.get(i).F = f.setScale(2, RoundingMode.HALF_UP);
         }
-
     }
     public static void findF2(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {
             BigDecimal g2BigDecimal = BigDecimal.valueOf(allClassification.get(i).g2);
             allClassification.get(i).F2 = allClassification.get(i).p2.multiply(g2BigDecimal);
         }
-
     }
     public static void findF1(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {

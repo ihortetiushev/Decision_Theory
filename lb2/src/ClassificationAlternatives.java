@@ -6,8 +6,8 @@ public class ClassificationAlternatives {
 
     List<ValueIndex> valueIndex;
     List<Integer> G = new ArrayList<>();
-    int d1;
-    int d2;
+    double d1;
+    double d2;
     BigDecimal p1;
     BigDecimal p2;
     int g1;

@@ -1,5 +1,6 @@
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -82,14 +83,13 @@ public class Main {
 
         find_G_secondIteration(allClassification);
         find_d1_secondIteration(allClassification);
-        //find_d2_secondIteration(allClassification, lastCombination);
-        //find_p1_secondIteration(allClassification);
+        find_d2_secondIteration(allClassification, lastCombination);
+        find_p1_secondIteration(allClassification);
+
         //виводимо другу ітерацію allClassification
         for (int i = 0; i < allClassification.size(); i++) {
             System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
         }
-
-
 
 
 
@@ -154,7 +154,7 @@ public class Main {
         for (int i = 0; i < allClassification.size(); i++) {
             //for (int j = 0; j < lastCombination.size(); j++) {
             int lastIndex = allClassification.get(i).valueIndex.size() - 1;
-                allClassification.get(i).d1 = Math.abs((allClassification.get(i).valueIndex.get(0).index + 1) - (allClassification.get(i).valueIndex.get(lastIndex).index + 1)) +
+                allClassification.get(i).d2 = Math.abs((allClassification.get(i).valueIndex.get(0).index + 1) - (allClassification.get(i).valueIndex.get(lastIndex).index + 1)) +
                         Math.abs((allClassification.get(i).valueIndex.get(1).index + 1) - (allClassification.get(i).valueIndex.get(lastIndex).index + 1)) +
                         Math.abs((allClassification.get(i).valueIndex.get(2).index + 1) - (allClassification.get(i).valueIndex.get(lastIndex).index + 1)) +
                         Math.abs((allClassification.get(i).valueIndex.get(3).index + 1) - (allClassification.get(i).valueIndex.get(lastIndex).index + 1)) +
@@ -185,23 +185,21 @@ public class Main {
         double middleThird = (double) sumThirdIndex / countTimes;
         double middleFourth = (double) sumFourthIndex / countTimes;
         double middleFifth = (double) sumFifthIndex / countTimes;
+
         for (int i = 0; i < allClassification.size(); i++) {
-            //allClassification.get(i).d1 = allClassification.get(i).d1.setScale(2, RoundingMode.HALF_UP);
             allClassification.get(i).d1 = Math.abs((allClassification.get(i).valueIndex.get(0).index + 1) - middleFirst) +
                     Math.abs((allClassification.get(i).valueIndex.get(1).index + 1) - middleSecond) +
                     Math.abs((allClassification.get(i).valueIndex.get(2).index + 1) - middleThird) +
                     Math.abs((allClassification.get(i).valueIndex.get(3).index + 1) - middleFourth) +
                     Math.abs((allClassification.get(i).valueIndex.get(4).index + 1) - middleFifth);
-            int x = 0;
         }
-        System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!{" + middleFirst + ", " + middleSecond + ", " + middleThird + ", " + middleFourth + ", " + middleFifth + "}");
-
+       // System.out.println("Y1 = {" + middleFirst + ", " + middleSecond + ", " + middleThird + ", " + middleFourth + ", " + middleFifth + "}");
     }
-   /* public static void find_p1_secondIteration(List<ClassificationAlternatives> allClassification) {
+    public static void find_p1_secondIteration(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {
             allClassification.get(i).p1 = find_p1(allClassification.get(i).d1, allClassification.get(i).d2);
         }
-    }*/
+    }
     /*public static void find_d1_secondIteration(List<ClassificationAlternatives> allClassification, List<List<ValueIndex>> allCombinations, List<ValueIndex> firstCombination) {
         for (int i = 0; i < allClassification.size(); i++) {
             allClassification.get(i).d1 = find_d(allCombinations.get(i),firstCombination);
@@ -355,7 +353,10 @@ public class Main {
 
         return middle;
     }
-
+    public static BigDecimal find_p1(double d1, double d2) {
+        double p1 = (D - d1) / (D - d1 + D - d2);
+        return BigDecimal.valueOf(p1).setScale(2, RoundingMode.HALF_UP);
+    }
     public static BigDecimal find_p1(int d1, int d2) {
         double p1 = (double) (D - d1) / (D - d1 + D - d2);
         return BigDecimal.valueOf(p1).setScale(2, RoundingMode.HALF_UP);

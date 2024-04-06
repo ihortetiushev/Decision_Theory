@@ -6,6 +6,7 @@ import java.util.List;
 public class ClassificationAlternatives {
 
     List<ValueIndex> valueIndex;
+
     List<Integer> G = new ArrayList<>();
     double d1;
     double d2;

@@ -281,7 +281,8 @@ public class Main {
     }
     public static void findF(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {
-            BigDecimal f = allClassification.get(i).F1.multiply(allClassification.get(i).F2);
+            //BigDecimal f = allClassification.get(i).F1.multiply(allClassification.get(i).F2);
+            BigDecimal f = allClassification.get(i).F1.add(allClassification.get(i).F2);
             allClassification.get(i).F = f.setScale(2, RoundingMode.HALF_UP);
         }
     }

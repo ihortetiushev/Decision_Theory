@@ -97,60 +97,6 @@ public class Main {
         for (int i = 0; i < allClassification.size(); i++) {
             System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
         }
-
-
-
-        //printAllClassification(allClassification);
-        //print(allCombinations, "Таблиця альтернатив");
-
-
-        //getAllCombinations(toAnalyze).get(0);
-        // Вивід результату
-
-
-        //System.out.println("Таблиця альтернатив: " + formattedString + "'");
-
-
-        /*System.out.println();
-        System.out.println("Завдання 5");
-        System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
-        alternativesNum(toAnalyze);
-
-        System.out.println();
-        System.out.println("Завдання 6");
-        System.out.println("Найкраща альтернатива: " + allCombinations.get(0));
-        System.out.println("Найгірша альтернатива: " + allCombinations.get(allCombinations.size()-1));
-        System.out.println();
-
-        System.out.println("Завдання 7");
-        List<ValueIndex> middle = findMiddle(allCombinations);
-        System.out.println("Вибрана альтернатива: " + middle);
-
-        System.out.println();
-        List<List<ValueIndex>> betterOrSame = getBetter(allCombinations, middle);
-        print(betterOrSame, "Кращі");
-
-        System.out.println();
-        List<List<ValueIndex>> worse = getWorse(allCombinations, middle);
-        print(worse, "Гірші");
-
-
-        System.out.println();
-        List<List<ValueIndex>> others = getOthers(allCombinations, betterOrSame, worse, middle);
-        print(others, "Не порівняні");
-
-        int counterBetter = betterOrSame.size();
-        int counterWorst = worse.size();
-        int counterNotComparable = others.size();
-        int totalNumberAlternatives = counterBetter + counterWorst + counterNotComparable + 1;
-        System.out.println();
-        System.out.println("Кількість кращих: " + counterBetter);
-        System.out.println("Кількість гірших: " + counterWorst);
-        System.out.println("Кількість не порівняних: " + counterNotComparable);
-        System.out.println("Загальна кількість альтернатив: " + counterBetter + " + " + counterWorst +
-                " + "+ counterNotComparable + " + 1 = " + totalNumberAlternatives);
-        System.out.println("Кількість гіпотетично можливих альтернатив: " + allCombinations.size());
-        System.out.println("Загальна кількість альтернатив дорівнює кількості гіпотетично можливих альтернатив");*/
     }
     public static void find_g2_secondIteration(List<ClassificationAlternatives> allClassification) {
 
@@ -229,30 +175,30 @@ public class Main {
                     Math.abs((allClassification.get(i).valueIndex.get(3).index + 1) - middleFourth) +
                     Math.abs((allClassification.get(i).valueIndex.get(4).index + 1) - middleFifth);
         }
-       // System.out.println("Y1 = {" + middleFirst + ", " + middleSecond + ", " + middleThird + ", " + middleFourth + ", " + middleFifth + "}");
+        System.out.println("Y1 = {" + middleFirst + ", " + middleSecond + ", " + middleThird + ", " + middleFourth + ", " + middleFifth + "}");
     }
 
     public static void find_p2_secondIteration(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {
             allClassification.get(i).p2 = find_p2(allClassification.get(i).d1, allClassification.get(i).d2);
             if(allClassification.get(i).G.equals(List.of(1))) {
-                allClassification.get(i).p2 =  BigDecimal.ZERO;
+                allClassification.get(i).p2 = BigDecimal.valueOf(0.0);//BigDecimal.ZERO;
             }
             if(allClassification.get(i).G.equals(List.of(2))) {
-                allClassification.get(i).p2 =  BigDecimal.ONE;
+                allClassification.get(i).p2 = BigDecimal.valueOf(1.0); //BigDecimal.ONE;
             }
         }
     }
 
     public static void find_p1_secondIteration(List<ClassificationAlternatives> allClassification) {
-
+        System.out.println("D = " + D);
         for (int i = 0; i < allClassification.size(); i++) {
             allClassification.get(i).p1 = find_p1(allClassification.get(i).d1, allClassification.get(i).d2);
             if(allClassification.get(i).G.equals(List.of(1))) {
-                allClassification.get(i).p1 =  BigDecimal.ONE;
+                allClassification.get(i).p1 = BigDecimal.valueOf(1.0); //BigDecimal.ONE;
             }
             if(allClassification.get(i).G.equals(List.of(2))) {
-                allClassification.get(i).p1 =  BigDecimal.ZERO;
+                allClassification.get(i).p1 = BigDecimal.valueOf(0.0); //BigDecimal.ZERO;
             }
         }
     }
@@ -301,7 +247,6 @@ public class Main {
     public static void find_g2(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification, BigDecimal mid_p) {
         int count_Better = 0;
         int count_as_mid = 0;
-        BigDecimal middleIndex = BigDecimal.valueOf(21);
         int middle_index = 21;
         ClassificationAlternatives middleList = middleOfList(allCombinations, allClassification);
         for (int i = 0; i < allClassification.size(); i++) {
@@ -377,19 +322,6 @@ public class Main {
         }
         throw new IllegalStateException("Exception");
     }
-
-
-    /*public static List<ClassificationAlternatives> middleOfList(List<List<ValueIndex>> allCombinations, List<ClassificationAlternatives> allClassification) {
-        BigDecimal midP = chooseMidP(allClassification);
-        int middleRow = allCombinations.size() / 2;
-        for (int i = middleRow; i > 0; i--) {
-            if(allCombinations.get(i).p1.compareTo(midP) == 0) {
-                return allClassification.get(i);
-            }
-        }
-        throw new IllegalStateException("Exception");
-    }*/
-
 
     public static BigDecimal chooseMidP(List<ClassificationAlternatives> allClassification) {
         BigDecimal middle = allClassification.get(0).p1;

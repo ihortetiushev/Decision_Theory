@@ -97,8 +97,60 @@ public class Main {
         for (int i = 0; i < allClassification.size(); i++) {
             System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
         }
+
+        System.out.println();
+        System.out.println("Третя ітерація");
+        find_G_ThirdIteration(allClassification);
+        find_d1_secondIteration(allClassification);
+        find_d2_secondIteration(allClassification, lastCombination);
+        find_p1_secondIteration(allClassification);
+        find_p2_secondIteration(allClassification);
+        find_g1_secondIteration(allClassification);
+        find_g2_secondIteration(allClassification);
+        findF1(allClassification);
+        findF2(allClassification);
+        findF(allClassification);
+
+        for (int i = 0; i < allClassification.size(); i++) {
+            System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
+        }
+
+
+        System.out.println();
+        System.out.println("Четверта ітерація");
+        find_G_ForthIteration(allClassification);
+        find_d1_secondIteration(allClassification);
+        find_d2_forthIteration(allClassification, lastCombination);
+        find_p1_secondIteration(allClassification);
+        find_p2_secondIteration(allClassification);
+        find_g1_secondIteration(allClassification);
+        find_g2_secondIteration(allClassification);
+        findF1(allClassification);
+        findF2(allClassification);
+        findF(allClassification);
+
+        for (int i = 0; i < allClassification.size(); i++) {
+            System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
+        }
+
+        System.out.println();
+        System.out.println("П'ята ітерація");
+        find_G_FifthIteration(allClassification);
+        find_d1_secondIteration(allClassification);
+        find_d2_forthIteration(allClassification, lastCombination);
+        find_p1_secondIteration(allClassification);
+        find_p2_secondIteration(allClassification);
+        find_g1_secondIteration(allClassification);
+        find_g2_secondIteration(allClassification);
+        findF1(allClassification);
+        findF2(allClassification);
+        findF(allClassification);
+
+        for (int i = 0; i < allClassification.size(); i++) {
+            System.out.println(fixedLengthString((i + 1) + "", 2) + allClassification.get(i));
+        }
     }
-    public static void find_g2_secondIteration(List<ClassificationAlternatives> allClassification) {
+   /* public static void find_g2_secondIteration(List<ClassificationAlternatives> allClassification) {
 
         for(int i = 0; i < allClassification.size(); i++) {
             if(allClassification.get(i).G.equals(List.of(1,2))){
@@ -114,23 +166,73 @@ public class Main {
             }
 
         }
+    }*/
+    public static void find_g2_secondIteration(List<ClassificationAlternatives> allClassification) {
+
+        for(int i = 0; i < allClassification.size(); i++) {
+            if(i != 0 && i < allClassification.size() -1) {
+                if (allClassification.get(i).G.equals(List.of(1, 2))) {
+                    if (allClassification.get(i).g1 == 0) {
+                        allClassification.get(i).g2 = 1;
+                    } else {
+                        allClassification.get(i).g2 = 0;
+                    }
+                }
+                else {
+                    allClassification.get(i).g2 = 0;
+                }
+            }
+        }
     }
     public static void find_g1_secondIteration(List<ClassificationAlternatives> allClassification) {
 
         for(int i = 0; i < allClassification.size(); i++) {
-            if(allClassification.get(i).G.equals(List.of(1,2))){
-                if(allClassification.get(i).p1.compareTo(BigDecimal.valueOf(0.5)) >= 0) {
+            if(i != 0 && i < allClassification.size() -1) {
+
+                if (allClassification.get(i).G.equals(List.of(1, 2))) {
+                    if (allClassification.get(i).p1.compareTo(BigDecimal.valueOf(0.5)) >= 0) {
+                        allClassification.get(i).g1 = 0;
+                    } else {
+                        allClassification.get(i).g1 = 1;
+                    }
+                } else {
                     allClassification.get(i).g1 = 0;
                 }
-                else{
-                    allClassification.get(i).g1 = 1;
-                }
             }
-            else{
-                allClassification.get(i).g1 = 0;
-            }
-
         }
+    }
+    public static void find_d2_forthIteration(List<ClassificationAlternatives> allClassification, List<ValueIndex> lastCombination) {
+        int sumFirstIndex = 0;
+        int sumSecondIndex = 0;
+        int sumThirdIndex = 0;
+        int sumFourthIndex = 0;
+        int sumFifthIndex = 0;
+
+        int countTimes = 0;
+        for(int i = 0; i < allClassification.size(); i++) {
+            if(allClassification.get(i).G.equals(List.of(2))) {
+                countTimes ++;
+                sumFirstIndex += allClassification.get(i).valueIndex.get(0).index + 1;
+                sumSecondIndex += allClassification.get(i).valueIndex.get(1).index + 1;
+                sumThirdIndex += allClassification.get(i).valueIndex.get(2).index + 1;
+                sumFourthIndex += allClassification.get(i).valueIndex.get(3).index + 1;
+                sumFifthIndex += allClassification.get(i).valueIndex.get(4).index + 1;
+            }
+        }
+        double middleFirst = (double) sumFirstIndex / countTimes;
+        double middleSecond = (double) sumSecondIndex / countTimes;
+        double middleThird = (double) sumThirdIndex / countTimes;
+        double middleFourth = (double) sumFourthIndex / countTimes;
+        double middleFifth = (double) sumFifthIndex / countTimes;
+
+        for (int i = 0; i < allClassification.size(); i++) {
+            allClassification.get(i).d2 = Math.abs((allClassification.get(i).valueIndex.get(0).index + 1) - middleFirst) +
+                    Math.abs((allClassification.get(i).valueIndex.get(1).index + 1) - middleSecond) +
+                    Math.abs((allClassification.get(i).valueIndex.get(2).index + 1) - middleThird) +
+                    Math.abs((allClassification.get(i).valueIndex.get(3).index + 1) - middleFourth) +
+                    Math.abs((allClassification.get(i).valueIndex.get(4).index + 1) - middleFifth);
+        }
+        System.out.println("Y2 = {" + middleFirst + ", " + middleSecond + ", " + middleThird + ", " + middleFourth + ", " + middleFifth + "}");
     }
     public static void find_d2_secondIteration(List<ClassificationAlternatives> allClassification, List<ValueIndex> lastCombination) {
         for (int i = 0; i < allClassification.size(); i++) {
@@ -202,7 +304,71 @@ public class Main {
             }
         }
     }
+    public static void find_G_FifthIteration(List<ClassificationAlternatives> allClassification) {
+        int countMaxF = 0;
+        BigDecimal valueMaxF = maxF(allClassification);
 
+        for(int i = allClassification.size() - 2 ; i > allClassification.size() - 5; i--) {
+            allClassification.get(i).G.clear();
+            allClassification.get(i).G.add(1);
+        }
+    }
+    public static void find_G_ForthIteration(List<ClassificationAlternatives> allClassification) {
+        int countMaxF = 0;
+        BigDecimal valueMaxF = maxF(allClassification);
+        for(int i = 0; i < allClassification.size(); i++) {
+            if (allClassification.get(i).F.compareTo(valueMaxF) == 0) {
+                if(countMaxF == 0){
+                    allClassification.get(i).G.clear();
+                    allClassification.get(i).G.add(1);
+                }
+                if(countMaxF == 1){
+                    allClassification.get(i).G.clear();
+                    allClassification.get(i).G.add(2);
+                }
+                countMaxF++;
+            }
+            else if(countMaxF < 2){
+                allClassification.get(i).G.clear();
+                allClassification.get(i).G.add(1);
+            }
+            else if(countMaxF < 3){
+                allClassification.get(i).G.clear();
+                allClassification.get(i).G.add(2);
+            }
+        }
+    }
+    public static void find_G_ThirdIteration(List<ClassificationAlternatives> allClassification) {
+        int countMaxF = 0;
+        BigDecimal valueMaxF = maxF(allClassification);
+        for(int i = 0; i < allClassification.size(); i++) {
+            if (allClassification.get(i).F.compareTo(valueMaxF) == 0) {
+                if(countMaxF == 0){
+                    allClassification.get(i).G.clear();
+                    allClassification.get(i).G.add(1);
+                }
+                countMaxF++;
+            }
+            else if(countMaxF < 2){
+                allClassification.get(i).G.clear();
+                allClassification.get(i).G.add(1);
+            }
+        }
+
+
+
+       /* for (int i = 0; i < allClassification.size(); i++) {
+
+            if (allClassification.get(i).F.equals(maxF(allClassification))) {
+                allClassification.get(i).G.clear();
+                allClassification.get(i).G.add(1);
+            }
+            if(allClassification.get(i).p1.compareTo(chooseMidP(allClassification)) > 0) {
+                allClassification.get(i).G.clear();
+                allClassification.get(i).G.add(1);
+            }
+        }*/
+    }
     public static void find_G_secondIteration(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {
             if (allClassification.get(i).F.equals(maxF(allClassification))) {
@@ -229,7 +395,7 @@ public class Main {
         for (int i = 0; i < allClassification.size(); i++) {
             //BigDecimal f = allClassification.get(i).F1.multiply(allClassification.get(i).F2);
             BigDecimal f = allClassification.get(i).F1.add(allClassification.get(i).F2);
-            allClassification.get(i).F = f.setScale(2, RoundingMode.HALF_UP);
+            allClassification.get(i).F = f.setScale(1, RoundingMode.HALF_UP);
         }
     }
     public static void findF2(List<ClassificationAlternatives> allClassification) {
@@ -337,19 +503,19 @@ public class Main {
     }
     public static BigDecimal find_p1(double d1, double d2) {
         double p1 = (D - d1) / (D - d1 + D - d2);
-        return BigDecimal.valueOf(p1).setScale(2, RoundingMode.HALF_UP);
+        return BigDecimal.valueOf(p1).setScale(1, RoundingMode.HALF_UP);
     }
     public static BigDecimal find_p1(int d1, int d2) {
         double p1 = (double) (D - d1) / (D - d1 + D - d2);
-        return BigDecimal.valueOf(p1).setScale(2, RoundingMode.HALF_UP);
+        return BigDecimal.valueOf(p1).setScale(1, RoundingMode.HALF_UP);
     }
     public static BigDecimal find_p2(double d1, double d2) {
         double p2 = (D - d2) / (D - d1 + D - d2);
-        return BigDecimal.valueOf(p2).setScale(2, RoundingMode.HALF_UP);
+        return BigDecimal.valueOf(p2).setScale(1, RoundingMode.HALF_UP);
     }
     public static BigDecimal find_p2(int d1, int d2) {
         double p2 = (double) (D - d2) / (D - d1 + D - d2);
-        return BigDecimal.valueOf(p2).setScale(2, RoundingMode.HALF_UP);
+        return BigDecimal.valueOf(p2).setScale(1, RoundingMode.HALF_UP);
     }
 
     public static int find_d(List<ValueIndex> valueIndex, List<ValueIndex> firstOrLastCombination) {

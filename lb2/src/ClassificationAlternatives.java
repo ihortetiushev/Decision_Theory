@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ClassificationAlternatives {
-
+    static final String PATTERN = "#.0";
     List<ValueIndex> valueIndex;
 
     List<Integer> G = new ArrayList<>();
@@ -17,15 +17,15 @@ public class ClassificationAlternatives {
     BigDecimal F1;
     BigDecimal F2;
     BigDecimal F;
-    String pattern = "#.00";
-    DecimalFormat decimalFormat = new DecimalFormat(pattern);
+
+    DecimalFormat decimalFormat = new DecimalFormat(PATTERN);
 
     @Override
     public String toString() {
         return  fixedLengthString(valueIndex + "",120) + fixedLengthString(
                 " G = " + G,15 )+
                 fixedLengthString("d1 = " + decimalFormat.format(d1) + "",13) +
-                fixedLengthString("d2 = " + d2 + "",13) +
+                fixedLengthString("d2 = " + decimalFormat.format(d2) + "",13) +
                 fixedLengthString("p1 = " + p1 + "",13) +
                 fixedLengthString("p2 = " + p2 + "",13) +
                 fixedLengthString("g1 = " + g1 + "",11) +

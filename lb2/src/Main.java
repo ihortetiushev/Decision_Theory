@@ -354,20 +354,6 @@ public class Main {
                 allClassification.get(i).G.add(1);
             }
         }
-
-
-
-       /* for (int i = 0; i < allClassification.size(); i++) {
-
-            if (allClassification.get(i).F.equals(maxF(allClassification))) {
-                allClassification.get(i).G.clear();
-                allClassification.get(i).G.add(1);
-            }
-            if(allClassification.get(i).p1.compareTo(chooseMidP(allClassification)) > 0) {
-                allClassification.get(i).G.clear();
-                allClassification.get(i).G.add(1);
-            }
-        }*/
     }
     public static void find_G_secondIteration(List<ClassificationAlternatives> allClassification) {
         for (int i = 0; i < allClassification.size(); i++) {

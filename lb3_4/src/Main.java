@@ -1,15 +1,32 @@
 import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
 
 
 public class Main {
+    final static String FIRST_QUESTION = "FIRST_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1211 (2))";
+    final static String SECOND_QUESTION = "SECOND_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1311 (2))";
+    final static String THIRD_QUESTION = "THIRD_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1411 (2))";
 
+
+    final static String FORTH_QUESTION = "FORTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1121 (2))";
+    final static String FIFTH_QUESTION = "FIFTH_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1131 (2))";
+    final static String SIXTH_QUESTION = "SIXTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1141 (2))";
+
+
+    final static String SEVENTH_QUESTION = "SEVENTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1112 (2))";
+    final static String EIGHT_QUESTION = "EIGHT_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1113 (2))";
+    final static String NINTH_QUESTION = "NINTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
+
+
+    final static String TENTH_QUESTION = "TENTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1112 (2))";
+    final static String ELEVENTH_QUESTION = "ELEVENTH_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1113 (2))";
+    final static String TWELFTH_QUESTION = "TWELFTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
+
+    final static String THIRTEENTH_QUESTION = "THIRTEENTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1112 (2))";
+    final static String FOURTEENTH_QUESTION = "FOURTEENTH_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1113 (2))";
+    final static String FIFTEENTH_QUESTION = "FIFTEENTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
         List<Criterion> all = CriterionInit.initialize();
@@ -56,26 +73,217 @@ public class Main {
             System.out.println();
         }
 
-        findPath(column1, column1, "getK1", "getK2");
-        /*
-        for (int i = 0; i < column1.length; i++) {
-            System.out.println(column1[i] + "\t" + column2[i] + "\t" + column3[i] + "\t" + column4[i]);
-        }*/
-
         System.out.println();
         System.out.println("Завдання 4:");
         System.out.println("Пари критеріїв, що будуть надалі порівнюватися:");
         System.out.println("К1+K2\tК1+K3\tK1+K4\tK2+К3\tK2+K4\tK3+K4");
         System.out.println();
 
+        List<Alternative> k1k2Path = findPathForK1K2(column1, column2);
+        System.out.println(k1k2Path);
+        System.out.println();
+
+        List<Alternative> k1k3Path = findPathForK1K3(column1, column3);
+        System.out.println(k1k3Path);
+        System.out.println();
+
+        List<Alternative> k1k4Path = findPathForK1K4(column1, column4);
+        System.out.println(k1k4Path);
+        System.out.println();
+
+        List<Alternative> k2k3Path = findPathForK2K3(column2, column3);
+        System.out.println(k2k3Path);
+        System.out.println();
+
+        List<Alternative> k2k4Path = findPathForK2K3(column2, column4);
+        System.out.println(k2k4Path);
+        System.out.println();
     }
 
-    public static List<Alternative> findPath(List<Alternative> criterion1, List<Alternative> criterion2,
+    public static List<Alternative> findPathForK2K4(List<Alternative> columnTwo, List<Alternative> columnForth) {
+        List<Alternative> k2k4Path = new ArrayList<>();
+        k2k4Path.add(columnTwo.get(0));
+        if(questionToOPR(THIRTEENTH_QUESTION) == true){
+            k2k4Path.add(columnTwo.get(1));
+            k2k4Path.add(columnForth.get(1));
+        }
+        else {
+
+            k2k4Path.add(columnForth.get(1));
+            k2k4Path.add(columnTwo.get(1));
+        }
+        if(questionToOPR(FOURTEENTH_QUESTION) == true){
+            k2k4Path.add(columnTwo.get(2));
+            k2k4Path.add(columnForth.get(2));
+        }
+        else {
+            k2k4Path.add(columnForth.get(2));
+            k2k4Path.add(columnTwo.get(2));
+        }
+        if(questionToOPR(FIFTEENTH_QUESTION) == true){
+            k2k4Path.add(columnTwo.get(3));
+            k2k4Path.add(columnForth.get(3));
+        }
+        else {
+            k2k4Path.add(columnForth.get(3));
+            k2k4Path.add(columnTwo.get(3));
+        }
+        return k2k4Path;
+    }
+
+    public static List<Alternative> findPathForK2K3(List<Alternative> columnTwo, List<Alternative> columnThree) {
+        List<Alternative> k2k3Path = new ArrayList<>();
+        k2k3Path.add(columnTwo.get(0));
+        if(questionToOPR(TENTH_QUESTION) == true){
+            k2k3Path.add(columnTwo.get(1));
+            k2k3Path.add(columnThree.get(1));
+        }
+        else {
+
+            k2k3Path.add(columnThree.get(1));
+            k2k3Path.add(columnTwo.get(1));
+        }
+        if(questionToOPR(ELEVENTH_QUESTION) == true){
+            k2k3Path.add(columnTwo.get(2));
+            k2k3Path.add(columnThree.get(2));
+        }
+        else {
+            k2k3Path.add(columnThree.get(2));
+            k2k3Path.add(columnTwo.get(2));
+        }
+        if(questionToOPR(TWELFTH_QUESTION) == true){
+            k2k3Path.add(columnTwo.get(3));
+            k2k3Path.add(columnThree.get(3));
+        }
+        else {
+            k2k3Path.add(columnThree.get(3));
+            k2k3Path.add(columnTwo.get(3));
+        }
+        return k2k3Path;
+    }
+
+    public static List<Alternative> findPathForK1K4(List<Alternative> columnOne, List<Alternative> columnForth) {
+        List<Alternative> k1k4Path = new ArrayList<>();
+        k1k4Path.add(columnOne.get(0));
+        if(questionToOPR(SEVENTH_QUESTION) == true){
+            k1k4Path.add(columnOne.get(1));
+            k1k4Path.add(columnForth.get(1));
+        }
+        else {
+            k1k4Path.add(columnForth.get(1));
+            k1k4Path.add(columnOne.get(1));
+        }
+        if(questionToOPR(EIGHT_QUESTION) == true){
+            k1k4Path.add(columnOne.get(2));
+            k1k4Path.add(columnForth.get(2));
+        }
+        else {
+            k1k4Path.add(columnForth.get(2));
+            k1k4Path.add(columnOne.get(2));
+        }
+        if(questionToOPR(NINTH_QUESTION) == true){
+            k1k4Path.add(columnOne.get(3));
+            k1k4Path.add(columnForth.get(3));
+        }
+        else {
+            k1k4Path.add(columnForth.get(3));
+            k1k4Path.add(columnOne.get(3));
+        }
+        return k1k4Path;
+    }
+
+
+    public static List<Alternative> findPathForK1K3(List<Alternative> columnOne, List<Alternative> columnThree) {
+        List<Alternative> k1k3Path = new ArrayList<>();
+        k1k3Path.add(columnOne.get(0));
+        if(questionToOPR(FORTH_QUESTION) == true){
+            k1k3Path.add(columnOne.get(1));
+            k1k3Path.add(columnThree.get(1));
+        }
+        else {
+            k1k3Path.add(columnThree.get(1));
+            k1k3Path.add(columnOne.get(1));
+        }
+        if(questionToOPR(FIFTH_QUESTION) == true){
+            k1k3Path.add(columnOne.get(2));
+            k1k3Path.add(columnThree.get(2));
+        }
+        else {
+            k1k3Path.add(columnThree.get(2));
+            k1k3Path.add(columnOne.get(2));
+        }
+        if(questionToOPR(SIXTH_QUESTION) == true){
+            k1k3Path.add(columnOne.get(3));
+            k1k3Path.add(columnThree.get(3));
+        }
+        else {
+            k1k3Path.add(columnThree.get(3));
+            k1k3Path.add(columnOne.get(3));
+        }
+        return k1k3Path;
+    }
+
+
+    public static List<Alternative> findPathForK1K2(List<Alternative> columnOne, List<Alternative> columnTwo) {
+        List<Alternative> k1k2Path = new ArrayList<>();
+        k1k2Path.add(columnOne.get(0));
+        if(questionToOPR(FIRST_QUESTION) == true){
+            k1k2Path.add(columnOne.get(1));
+            k1k2Path.add(columnTwo.get(1));
+        }
+        else {
+            k1k2Path.add(columnTwo.get(1));
+            k1k2Path.add(columnOne.get(1));
+        }
+        if(questionToOPR(SECOND_QUESTION) == true){
+            k1k2Path.add(columnOne.get(2));
+            k1k2Path.add(columnTwo.get(2));
+        }
+        else {
+            k1k2Path.add(columnTwo.get(2));
+            k1k2Path.add(columnOne.get(2));
+        }
+        if(questionToOPR(THIRD_QUESTION) == true){
+            k1k2Path.add(columnOne.get(3));
+            k1k2Path.add(columnTwo.get(3));
+        }
+        else {
+            k1k2Path.add(columnTwo.get(3));
+            k1k2Path.add(columnOne.get(3));
+        }
+        return k1k2Path;
+    }
+    public static boolean questionToOPR (String question) {
+        Scanner OPR_answer = new Scanner(System.in);
+        System.out.println(question);
+        String answer;
+        boolean wrongInput;
+        do {
+            answer = OPR_answer.nextLine();
+            wrongInput = !(answer.equals("2") || answer.equals("1"));
+            if(wrongInput) {
+                System.out.println("Wrong input, try again");
+            }
+        }
+        while(wrongInput);
+        return answer.equals("1");
+    }
+    /*public static List<Alternative> findPath(List<Alternative> criterion1, List<Alternative> criterion2,
                                              String method1, String method2) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Scanner OPRanswer = new Scanner(System.in);  // Create a Scanner object
+        System.out.println("Enter yes if ");
+
+        String userName = myObj.nextLine();  // Read user input
+        System.out.println("Username is: " + userName);  // Output user input
+
+
+
         Method getK = criterion1.get(0).getClass().getMethod(method1);
         Integer k = (Integer) getK.invoke(criterion1.get(0));
+        Method getK2 = criterion2.get(0).getClass().getMethod(method2);
+        Integer k2 = (Integer) getK.invoke(criterion2.get(0));
         return null;
-    }
+    }*/
 
 
     public static String fixedLengthString(String string, int length) {

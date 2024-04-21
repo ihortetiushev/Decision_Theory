@@ -3,7 +3,6 @@ import java.util.List;
 
 public class Criterion {
     String criterionName;
-    double rate;
     int criterionNum;
     List<String> criterionValues = new ArrayList<>();
 
@@ -13,7 +12,6 @@ public class Criterion {
     @Override
     public String toString() {
         return "Критерій: " + criterionName +
-                ", (Оцінка: " + rate + ")" +
                 ", Критеріальні значення: " + criterionValues +
                 '}';
     }

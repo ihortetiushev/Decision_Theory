@@ -1,3 +1,5 @@
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -8,7 +10,7 @@ import java.util.stream.Collectors;
 
 public class Main {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
         List<Criterion> all = CriterionInit.initialize();
         List<Criterion> toAnalyze = new ArrayList<>();
@@ -16,10 +18,65 @@ public class Main {
         toAnalyze.add(all.get(1));
         toAnalyze.add(all.get(2));
         toAnalyze.add(all.get(3));
-        toAnalyze.add(all.get(4));
 
+        // Печать всех комбинаций критериев
+
+        System.out.println("Задані критерії: ");
+        printAnalyzeCriterion(toAnalyze);
+        System.out.println();
+        List<List<ValueIndex>> allCombinations = getAllCombinations(toAnalyze);
+        System.out.println("Завдання 2");
+        int n = 4;
+        int  N = n*(n-1)/2;
+        System.out.println("N = " + N+ ", Кількість попарних порівнянь дорінює " + N);
+        System.out.println();
+
+        System.out.println("Завдання 3:");
+        System.out.println("Множина альтернатив першої опорної ситуації");
+        System.out.println("  " + "К1\tК2\t\tК3\t\tK4");
+
+        List<Alternative> column1 = new ArrayList<>();
+        List<Alternative> column2 = new ArrayList<>();
+        List<Alternative> column3 = new ArrayList<>();
+        List<Alternative> column4 = new ArrayList<>();
+
+
+        for(int i = 1; i <= 4; i++) {
+            column1.add(new Alternative(i,1,1,1));
+            column2.add(new Alternative(1,i,1,1));
+            column3.add(new Alternative(1,1,i,1));
+            column4.add(new Alternative(1,1,1,i));
+        }
+
+        for(int i = 0; i < 4; i++) {
+            System.out.print(column1.get(i) + " " );
+            System.out.print(column2.get(i) + " " );
+            System.out.print(column3.get(i) + " " );
+            System.out.print(column4.get(i) + " " );
+            System.out.println();
+        }
+
+        findPath(column1, column1, "getK1", "getK2");
+        /*
+        for (int i = 0; i < column1.length; i++) {
+            System.out.println(column1[i] + "\t" + column2[i] + "\t" + column3[i] + "\t" + column4[i]);
+        }*/
+
+        System.out.println();
+        System.out.println("Завдання 4:");
+        System.out.println("Пари критеріїв, що будуть надалі порівнюватися:");
+        System.out.println("К1+K2\tК1+K3\tK1+K4\tK2+К3\tK2+K4\tK3+K4");
+        System.out.println();
 
     }
+
+    public static List<Alternative> findPath(List<Alternative> criterion1, List<Alternative> criterion2,
+                                             String method1, String method2) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
+        Method getK = criterion1.get(0).getClass().getMethod(method1);
+        Integer k = (Integer) getK.invoke(criterion1.get(0));
+        return null;
+    }
+
 
     public static String fixedLengthString(String string, int length) {
         return String.format("%1$" + length + "s", string);

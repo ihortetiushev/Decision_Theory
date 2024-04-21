@@ -20,13 +20,17 @@ public class Main {
     final static String NINTH_QUESTION = "NINTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
 
 
-    final static String TENTH_QUESTION = "TENTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1112 (2))";
-    final static String ELEVENTH_QUESTION = "ELEVENTH_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1113 (2))";
-    final static String TWELFTH_QUESTION = "TWELFTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
+    final static String TENTH_QUESTION = "TENTH_QUESTION   Choose more important criterion (1 or 2). 1211 (1), 1121 (2))";
+    final static String ELEVENTH_QUESTION = "ELEVENTH_QUESTION   Choose more important criterion (1 or 2). 1311 (1), 1131 (2))";
+    final static String TWELFTH_QUESTION = "TWELFTH_QUESTION   Choose more important criterion (1 or 2). 1411 (1), 1141 (2))";
 
-    final static String THIRTEENTH_QUESTION = "THIRTEENTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1112 (2))";
-    final static String FOURTEENTH_QUESTION = "FOURTEENTH_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1113 (2))";
-    final static String FIFTEENTH_QUESTION = "FIFTEENTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
+    final static String THIRTEENTH_QUESTION = "THIRTEENTH_QUESTION   Choose more important criterion (1 or 2). 1211 (1), 1112 (2))";
+    final static String FOURTEENTH_QUESTION = "FOURTEENTH_QUESTION   Choose more important criterion (1 or 2). 1311 (1), 1113 (2))";
+    final static String FIFTEENTH_QUESTION = "FIFTEENTH_QUESTION   Choose more important criterion (1 or 2). 1411 (1), 1114 (2))";
+
+    final static String SIXTEENTH_QUESTION = "SIXTEENTH_QUESTION   Choose more important criterion (1 or 2). 1121 (1), 1112 (2))";
+    final static String SEVENTEEN_QUESTION = "SEVENTEEN_QUESTION   Choose more important criterion (1 or 2). 1131 (1), 1113 (2))";
+    final static String EIGHTEEN_QUESTION = "EIGHTEEN_QUESTION   Choose more important criterion (1 or 2). 1141 (1), 1114 (2))";
     public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
 
         List<Criterion> all = CriterionInit.initialize();
@@ -95,9 +99,44 @@ public class Main {
         System.out.println(k2k3Path);
         System.out.println();
 
-        List<Alternative> k2k4Path = findPathForK2K3(column2, column4);
+        List<Alternative> k2k4Path = findPathForK2K4(column2, column4);
         System.out.println(k2k4Path);
         System.out.println();
+
+        List<Alternative> k3k4Path = findPathForK3K4(column3, column4);
+        System.out.println(k3k4Path);
+        System.out.println();
+    }
+
+    public static List<Alternative> findPathForK3K4(List<Alternative> columnThree, List<Alternative> columnForth) {
+        List<Alternative> k3k4Path = new ArrayList<>();
+        k3k4Path.add(columnThree.get(0));
+        if(questionToOPR(SIXTEENTH_QUESTION) == true){
+            k3k4Path.add(columnThree.get(1));
+            k3k4Path.add(columnForth.get(1));
+        }
+        else {
+
+            k3k4Path.add(columnForth.get(1));
+            k3k4Path.add(columnThree.get(1));
+        }
+        if(questionToOPR(SEVENTEEN_QUESTION) == true){
+            k3k4Path.add(columnThree.get(2));
+            k3k4Path.add(columnForth.get(2));
+        }
+        else {
+            k3k4Path.add(columnForth.get(2));
+            k3k4Path.add(columnThree.get(2));
+        }
+        if(questionToOPR(EIGHTEEN_QUESTION) == true){
+            k3k4Path.add(columnThree.get(3));
+            k3k4Path.add(columnForth.get(3));
+        }
+        else {
+            k3k4Path.add(columnForth.get(3));
+            k3k4Path.add(columnThree.get(3));
+        }
+        return k3k4Path;
     }
 
     public static List<Alternative> findPathForK2K4(List<Alternative> columnTwo, List<Alternative> columnForth) {

@@ -5,34 +5,34 @@ import java.util.*;
 
 
 public class Main {
-    final static String FIRST_QUESTION = "FIRST_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1211 (2))";
-    final static String SECOND_QUESTION = "SECOND_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1311 (2))";
-    final static String THIRD_QUESTION = "THIRD_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1411 (2))";
+    final static String FIRST_QUESTION = "First question   Choose more important criterion (1 or 2). 2111 (1), 1211 (2))";
+    final static String SECOND_QUESTION = "Second question   Choose more important criterion (1 or 2). 3111 (1), 1311 (2))";
+    final static String THIRD_QUESTION = "Third question   Choose more important criterion (1 or 2). 4111 (1), 1411 (2))";
 
 
-    final static String FORTH_QUESTION = "FORTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1121 (2))";
-    final static String FIFTH_QUESTION = "FIFTH_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1131 (2))";
-    final static String SIXTH_QUESTION = "SIXTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1141 (2))";
+    final static String FORTH_QUESTION = "Forth question   Choose more important criterion (1 or 2). 2111 (1), 1121 (2))";
+    final static String FIFTH_QUESTION = "Fifth question   Choose more important criterion (1 or 2). 3111 (1), 1131 (2))";
+    final static String SIXTH_QUESTION = "Sixth question   Choose more important criterion (1 or 2). 4111 (1), 1141 (2))";
 
 
-    final static String SEVENTH_QUESTION = "SEVENTH_QUESTION   Choose more important criterion (1 or 2). 2111 (1), 1112 (2))";
-    final static String EIGHT_QUESTION = "EIGHT_QUESTION   Choose more important criterion (1 or 2). 3111 (1), 1113 (2))";
-    final static String NINTH_QUESTION = "NINTH_QUESTION   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
+    final static String SEVENTH_QUESTION = "Seventh question   Choose more important criterion (1 or 2). 2111 (1), 1112 (2))";
+    final static String EIGHT_QUESTION = "Eighth question   Choose more important criterion (1 or 2). 3111 (1), 1113 (2))";
+    final static String NINTH_QUESTION = "Ninth question   Choose more important criterion (1 or 2). 4111 (1), 1114 (2))";
 
 
-    final static String TENTH_QUESTION = "TENTH_QUESTION   Choose more important criterion (1 or 2). 1211 (1), 1121 (2))";
-    final static String ELEVENTH_QUESTION = "ELEVENTH_QUESTION   Choose more important criterion (1 or 2). 1311 (1), 1131 (2))";
-    final static String TWELFTH_QUESTION = "TWELFTH_QUESTION   Choose more important criterion (1 or 2). 1411 (1), 1141 (2))";
+    final static String TENTH_QUESTION = "Tenth question   Choose more important criterion (1 or 2). 1211 (1), 1121 (2))";
+    final static String ELEVENTH_QUESTION = "Eleventh question   Choose more important criterion (1 or 2). 1311 (1), 1131 (2))";
+    final static String TWELFTH_QUESTION = "Twelfth question   choose more important criterion (1 or 2). 1411 (1), 1141 (2))";
 
-    final static String THIRTEENTH_QUESTION = "THIRTEENTH_QUESTION   Choose more important criterion (1 or 2). 1211 (1), 1112 (2))";
-    final static String FOURTEENTH_QUESTION = "FOURTEENTH_QUESTION   Choose more important criterion (1 or 2). 1311 (1), 1113 (2))";
-    final static String FIFTEENTH_QUESTION = "FIFTEENTH_QUESTION   Choose more important criterion (1 or 2). 1411 (1), 1114 (2))";
+    final static String THIRTEENTH_QUESTION = "Thirteenth question   Choose more important criterion (1 or 2). 1211 (1), 1112 (2))";
+    final static String FOURTEENTH_QUESTION = "Fourteenth question   Choose more important criterion (1 or 2). 1311 (1), 1113 (2))";
+    final static String FIFTEENTH_QUESTION = "Fifteenth question   choose more important criterion (1 or 2). 1411 (1), 1114 (2))";
 
-    final static String SIXTEENTH_QUESTION = "SIXTEENTH_QUESTION   Choose more important criterion (1 or 2). 1121 (1), 1112 (2))";
-    final static String SEVENTEEN_QUESTION = "SEVENTEEN_QUESTION   Choose more important criterion (1 or 2). 1131 (1), 1113 (2))";
-    final static String EIGHTEEN_QUESTION = "EIGHTEEN_QUESTION   Choose more important criterion (1 or 2). 1141 (1), 1114 (2))";
+    final static String SIXTEENTH_QUESTION = "Sixteenth question   Choose more important criterion (1 or 2). 1121 (1), 1112 (2))";
+    final static String SEVENTEEN_QUESTION = "Seventeen question   Choose more important criterion (1 or 2). 1131 (1), 1113 (2))";
+    final static String EIGHTEEN_QUESTION = "Eighteen question   Choose more important criterion (1 or 2). 1141 (1), 1114 (2))";
 
-    public static void main(String[] args) throws InvocationTargetException, NoSuchMethodException, IllegalAccessException {
+    public static void main(String[] args) {
 
         List<Criterion> all = CriterionInit.initialize();
         List<Criterion> toAnalyze = new ArrayList<>();
@@ -41,7 +41,6 @@ public class Main {
         toAnalyze.add(all.get(2));
         toAnalyze.add(all.get(3));
 
-        // Печать всех комбинаций критериев
 
         System.out.println("Задані критерії: ");
         printAnalyzeCriterion(toAnalyze);

@@ -132,7 +132,7 @@ public class Main {
         allPath.add(k3k4Path);
 
         System.out.println();
-        System.out.println("Фінальний ланцюжок: " + finalPath(allPath));
+        System.out.println("Єдина порядкова шкала: " + finalPath(allPath));
     }
 
     public static List<Alternative> finalPath(List<List<Alternative>> allPath) {
@@ -329,27 +329,6 @@ public class Main {
         while (wrongInput);
         return answer.equals("1");
     }
-    /*public static List<Alternative> findPath(List<Alternative> criterion1, List<Alternative> criterion2,
-                                             String method1, String method2) throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Scanner OPRanswer = new Scanner(System.in);  // Create a Scanner object
-        System.out.println("Enter yes if ");
-
-        String userName = myObj.nextLine();  // Read user input
-        System.out.println("Username is: " + userName);  // Output user input
-
-
-
-        Method getK = criterion1.get(0).getClass().getMethod(method1);
-        Integer k = (Integer) getK.invoke(criterion1.get(0));
-        Method getK2 = criterion2.get(0).getClass().getMethod(method2);
-        Integer k2 = (Integer) getK.invoke(criterion2.get(0));
-        return null;
-    }*/
-
-
-    public static String fixedLengthString(String string, int length) {
-        return String.format("%1$" + length + "s", string);
-    }
 
     public static void printAnalyzeCriterion(List<Criterion> toAnalyze) {
         for (Criterion criterion : toAnalyze) {
@@ -357,101 +336,6 @@ public class Main {
         }
     }
 
-    public static void alternativesNum(List<Criterion> toAnalyze) {
-        int size = toAnalyze.size();
-        int alternativesNum = 1;
-        for (int i = 0; i < size; i++) {
-            Criterion criterion = toAnalyze.get(i);
-            alternativesNum *= criterion.criterionValues.size();
-            System.out.print(criterion.criterionValues.size());
-
-            if (i < size - 1) {
-                System.out.print(" * ");
-            }
-            if (i == size - 1) {
-                System.out.println(" = " + alternativesNum);
-            }
-        }
-    }
-
-    private static void print(List<List<ValueIndex>> list, String header) {
-        System.out.println(header);
-        for (int i = 0; i < list.size(); i++) {
-            System.out.print(i + 1 + " ");
-            List<ValueIndex> row = list.get(i);
-            System.out.print("{");
-            for (int n = 0; n < row.size(); n++) {
-                ValueIndex obj = row.get(n);
-                System.out.print("(k = " + obj.criterionNum + (obj.index + 1) + ")" + " \"" + obj.value + "\"; ");
-            }
-            System.out.println("}");
-            // System.out.println(row);
-        }
-    }
-
-    static List<ValueIndex> findMiddle(List<List<ValueIndex>> list) {
-        int numberOfCriterion = list.get(0).size();//all supposed to be of the same size
-        List<Integer> max = new ArrayList<>(numberOfCriterion);//all supposed to be of the same size
-        //initialize max with all 0
-        for (int i = 0; i < numberOfCriterion; i++) {
-            max.add(i, 0);
-        }
-        for (List<ValueIndex> item : list) {
-            //finding max for each criterion value
-            for (int i = 0; i < numberOfCriterion; i++) {
-                if (item.get(i).index >= max.get(i)) {
-                    max.set(i, item.get(i).index);
-                }
-            }
-        }
-        List<Integer> middles = new ArrayList<>(numberOfCriterion);
-        for (int i = 0; i < numberOfCriterion; i++) {
-            middles.add(i, new BigDecimal(max.get(i)).divide(BigDecimal.TWO, RoundingMode.HALF_UP).intValue());
-        }
-        return list.stream().filter(item -> {
-            boolean same = true;
-            for (int i = 0; i < numberOfCriterion; i++) {
-                same = middles.get(i) == item.get(i).index;
-                if (!same) {
-                    break;
-                }
-            }
-            return same;
-        }).findFirst().orElseThrow();
-    }
-
-    static List<List<ValueIndex>> getBetter(List<List<ValueIndex>> list, List<ValueIndex> toCompare) {
-        List<List<ValueIndex>> betterOrSameList = new ArrayList<>();
-        for (List<ValueIndex> current : list) {
-            List<Integer> comparison = ValueIndex.compare(current, toCompare);
-            if (ValueIndex.isBetterOrSame(comparison)) {
-                betterOrSameList.add(current);
-            }
-        }
-        betterOrSameList.remove(toCompare);
-        return betterOrSameList;
-    }
-
-    static List<List<ValueIndex>> getWorse(List<List<ValueIndex>> list, List<ValueIndex> toCompare) {
-        List<List<ValueIndex>> worseList = new ArrayList<>();
-        for (List<ValueIndex> current : list) {
-            List<Integer> comparison = ValueIndex.compare(current, toCompare);
-            if (ValueIndex.isWorse(comparison)) {
-                worseList.add(current);
-            }
-        }
-        return worseList;
-    }
-
-    static List<List<ValueIndex>> getOthers(List<List<ValueIndex>> allList, List<List<ValueIndex>> betterList,
-                                            List<List<ValueIndex>> worstList, List<ValueIndex> middle) {
-        List<List<ValueIndex>> others = new ArrayList<>(allList.size());
-        others.addAll(allList);
-        others.removeAll(betterList);
-        others.removeAll(worstList);
-        others.remove(middle);
-        return others;
-    }
 
     public static List<List<ValueIndex>> getAllCombinations(List<Criterion> criteria) {
         List<List<ValueIndex>> allCombinations = new ArrayList<>();

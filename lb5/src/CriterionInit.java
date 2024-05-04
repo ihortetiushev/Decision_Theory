@@ -32,7 +32,6 @@ public class CriterionInit {
         alternative.add(criterion4);
 
         criterion5.criterionName = "Ступінь автоматизації масштабування";
-
         criterion5.criterionNum = 5;
         criterion5.criterionValues.addAll(List.of("повна", "часткова", "відсутня"));
         alternative.add(criterion5);

@@ -2,6 +2,7 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
@@ -44,11 +45,63 @@ public class Main {
         askOPRforCompareCriterion(comparisons, all.get(2), all.get(4));
 
         askOPRforCompareCriterion(comparisons, all.get(3), all.get(4));
+
+
+        relativeImportanceCriteriaScale(comparisons, all);
     }
-    public static void relativeImportanceCriteriaScale(int index1, int index2, List<CriterionComparison> comparisons) {
-        System.out.println("Критерії     С1     С2     С3     C4     C5     Власний " + "вектор");
+
+    public static void relativeImportanceCriteriaScale(List<CriterionComparison> comparisons,
+                                                       List<Criterion> all) {
+        System.out.println("Критерії     С1      С2      С3      C4      C5     Власний вектор");
+        BigDecimal sumEigenvector = BigDecimal.ZERO;
+        List<BigDecimal> eigenvectorList = new ArrayList<>();
+        BigDecimal criterionWeight;
+
+        for (int i = 0; i < all.size(); i++) {
+            System.out.print("C" + (i + 1) + "          ");
+            BigDecimal multiplicationCriterion = new BigDecimal("1");
+            BigDecimal eigenvector;
 
 
+
+            for (int j = 0; j < all.size(); j++) {
+
+                if (i != j) {
+                    CriterionComparison criterionComparison = comparisonsTwoIndex(i, j, comparisons);
+                    System.out.print(criterionComparison.criterionStringMark);
+                    multiplicationCriterion = multiplicationCriterion.multiply(criterionComparison.criterionMarkValue);
+                } else {
+                    System.out.print("1.0");
+                }
+                System.out.print("     ");
+            }
+
+            eigenvector = BigDecimal.valueOf(Math.pow(multiplicationCriterion.doubleValue(), 1.0 / all.size())).setScale(1, RoundingMode.HALF_UP);
+            eigenvectorList.add(eigenvector);
+            sumEigenvector = sumEigenvector.add(eigenvector);
+
+
+            System.out.print("     " + eigenvector );
+            System.out.println();
+        }
+        System.out.println();
+        System.out.println("Вага критерію:");
+        System.out.println("Сума власних векторів: " + sumEigenvector);
+        for (int j = 0; j < all.size(); j++) {
+            criterionWeight = eigenvectorList.get(j).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvector, RoundingMode.HALF_UP);
+            System.out.println("w" + j + " = " + criterionWeight);
+        }
+
+    }
+
+    public static CriterionComparison comparisonsTwoIndex(int index1, int index2,
+                                                          List<CriterionComparison> comparisons) throws NoSuchElementException {
+        for (int i = 0; i < comparisons.size(); i++) {
+            if (comparisons.get(i).criterion1.criterionNum - 1 == index1 && comparisons.get(i).criterion2.criterionNum - 1 == index2) {
+                return comparisons.get(i);
+            }
+        }
+        throw new NoSuchElementException("Comparison not found for indices: " + index1 + ", " + index2);
     }
 
     /*public static void relativeImportanceCriteriaScale(List<Criterion> all) {
@@ -60,7 +113,8 @@ public class Main {
             System.out.print("C" + (i + 1) + "        ");
             for (int j = 0; j < all.size(); j++) {
                 BigDecimal criterionComparison =
-                        all.get(i).criterionMark.criterionMarkValue.divide(all.get(j).criterionMark.criterionMarkValue,
+                        all.get(i).criterionMark.criterionMarkValue.divide(all.get(j).criterionMark
+                        .criterionMarkValue,
                                 RoundingMode.HALF_UP);
                 multiplicationCriterion =
                         multiplicationCriterion.add(criterionComparison);
@@ -78,7 +132,8 @@ public class Main {
         }
     }*/
 
-    public static void askOPRforCompareCriterion(List<CriterionComparison> comparisons, Criterion one, Criterion two) {
+    public static void askOPRforCompareCriterion(List<CriterionComparison> comparisons, Criterion one,
+                                                 Criterion two) {
         CriterionComparison compareTwoCriteria = new CriterionComparison();
         CriterionComparison compareReverseTwoCriteria = new CriterionComparison();
         comparisons.add(compareTwoCriteria);
@@ -86,7 +141,7 @@ public class Main {
         //List<CriterionComparison>
         Scanner OPR_answer = new Scanner(System.in);
 
-        System.out.println("Порівняйте критерії \"" + one.criterionName + "та \"" + two.criterionName + "\"");
+        System.out.println("Порівняйте критерії \"" + one.criterionName + " та \"" + two.criterionName + "\"");
 
         System.out.println("Напишіть цифру, якщо 1 - значно-значно гірше, 2 - значно гірше, " +
                 "3 - гірше, 4 - трішки гірше, 5 - дорівнює, 6 - трішки краще, 7 - краще, 8 - значно краще, " +
@@ -150,28 +205,28 @@ public class Main {
             case "6" -> {
                 compareTwoCriteria.criterionMarkValue = BigDecimal.valueOf(3.0);
                 compareTwoCriteria.criterionStringMark = "3.0";
-                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0/3.0);
+                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0 / 3.0);
                 compareReverseTwoCriteria.criterionStringMark = "1/3";
             }
 
             case "7" -> {
                 compareTwoCriteria.criterionMarkValue = BigDecimal.valueOf(5.0);
                 compareTwoCriteria.criterionStringMark = "5.0";
-                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0/5.0);
+                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0 / 5.0);
                 compareReverseTwoCriteria.criterionStringMark = "1/5";
             }
 
             case "8" -> {
                 compareTwoCriteria.criterionMarkValue = BigDecimal.valueOf(7.0);
                 compareTwoCriteria.criterionStringMark = "7.0";
-                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0/7.0);
+                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0 / 7.0);
                 compareReverseTwoCriteria.criterionStringMark = "1/7";
             }
 
             case "9" -> {
                 compareTwoCriteria.criterionMarkValue = BigDecimal.valueOf(9.0);
                 compareTwoCriteria.criterionStringMark = "9.0";
-                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0/9.0);
+                compareReverseTwoCriteria.criterionMarkValue = BigDecimal.valueOf(1.0 / 9.0);
                 compareReverseTwoCriteria.criterionStringMark = "1/9";
             }
 
@@ -186,7 +241,8 @@ public class Main {
         System.out.println("Визначте критерій на оцінку \"гірший\"");
 
         System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2).criterionName +
+                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
+                .criterionName +
                 ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
         String answer;
         boolean wrongInput;
@@ -217,7 +273,8 @@ public class Main {
         System.out.println("Визначте критерій на оцінку \"трішки гірший\"");
 
         System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2).criterionName +
+                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
+                .criterionName +
                 ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
         String answer;
         boolean wrongInput;
@@ -247,7 +304,8 @@ public class Main {
         System.out.println("Визначте критерій на оцінку \"дорівнює\"");
 
         System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2).criterionName +
+                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
+                .criterionName +
                 ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
         String answer;
         boolean wrongInput;
@@ -277,7 +335,8 @@ public class Main {
         System.out.println("Визначте критерій на оцінку \"трішки кращий\"");
 
         System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2).criterionName +
+                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
+                .criterionName +
                 ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
         String answer;
         boolean wrongInput;
@@ -307,7 +366,8 @@ public class Main {
         System.out.println("Визначте критерій на оцінку \"кращий\"");
 
         System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2).criterionName +
+                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
+                .criterionName +
                 ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
         String answer;
         boolean wrongInput;

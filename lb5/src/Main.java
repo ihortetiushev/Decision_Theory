@@ -1,3 +1,5 @@
+import org.w3c.dom.ls.LSOutput;
+
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
@@ -8,20 +10,16 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) {
         List<Criterion> all = CriterionInit.initialize();
+        List<Alternative> alternatives = AlternativeInit.initializeAlternative(all);
+        AlternativeResult[][] alternativesForCriterion1 = AlternativeResultInit.initializeAlternativeForCriterion1();
+
         List<CriterionComparison> comparisons = new ArrayList<>();
         System.out.println("Завдання 2");
-        // CriterionInit.initialize().get(0);
-        //
         System.out.println("Визначте оцінку від гіршого до кращого для критеріїв: " + all.get(0).criterionName + ", " + all.get(1).criterionName +
                 ", " + all.get(2).criterionName + ", " + all.get(3).criterionName + ", "
                 + all.get(4).criterionName);
         System.out.println();
 
-       /* askOPRforCompareCriterion(all);
-        askOPRforWorseMark(all);
-        askOPRforEqualsMark(all);
-        askOPRforBetterMark(all);
-        askOPRforBestMark(all);*/
 
         System.out.println(all.get(0).criterionMark);
         System.out.println(all.get(1).criterionMark);
@@ -30,9 +28,10 @@ public class Main {
         System.out.println(all.get(4).criterionMark);
 
         System.out.println();
+        System.out.println("Завдання 2");
         System.out.println("Матриця порівнянь для критеріїв");
-        //relativeImportanceCriteriaScale(all);
-        askOPRforCompareCriterion(comparisons, all.get(0), all.get(1));
+
+        /*askOPRforCompareCriterion(comparisons, all.get(0), all.get(1));
         askOPRforCompareCriterion(comparisons, all.get(0), all.get(2));
         askOPRforCompareCriterion(comparisons, all.get(0), all.get(3));
         askOPRforCompareCriterion(comparisons, all.get(0), all.get(4));
@@ -46,8 +45,28 @@ public class Main {
 
         askOPRforCompareCriterion(comparisons, all.get(3), all.get(4));
 
+        relativeImportanceCriteriaScale(comparisons, all);*/
 
-        relativeImportanceCriteriaScale(comparisons, all);
+        System.out.println();
+        System.out.println("Завдання 3");
+        System.out.println("Важливость альтернатив за кожним із критеріїв");
+        compareAlternativesToCriteria1(alternativesForCriterion1);
+    }
+
+
+    public static void compareAlternativesToCriteria1(AlternativeResult[][] alternativesForCriterion) {
+        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        for (int i = 0; i < alternativesForCriterion.length; i++) {
+            System.out.print("A" + (i + 1) + "          ");
+            BigDecimal eigenvector = BigDecimal.ZERO;
+            BigDecimal multiplicationAlternatives = BigDecimal.ONE;
+            for (int j = 0; j < alternativesForCriterion.length; j++) {
+                System.out.print("     " + alternativesForCriterion[i][j]);
+                multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
+                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
+            }
+            System.out.println("          multiplication = " + multiplicationAlternatives + "              eigenvector" + eigenvector);
+        }
     }
 
     public static void relativeImportanceCriteriaScale(List<CriterionComparison> comparisons,
@@ -81,7 +100,7 @@ public class Main {
             sumEigenvector = sumEigenvector.add(eigenvector);
 
 
-            System.out.print("     " + eigenvector );
+            System.out.print("     " + eigenvector);
             System.out.println();
         }
         System.out.println();
@@ -104,33 +123,6 @@ public class Main {
         throw new NoSuchElementException("Comparison not found for indices: " + index1 + ", " + index2);
     }
 
-    /*public static void relativeImportanceCriteriaScale(List<Criterion> all) {
-
-        System.out.println("Критерії     С1     С2     С3     C4     C5     Власний " +
-                "вектор");
-        for (int i = 0; i < all.size(); i++) {
-            BigDecimal multiplicationCriterion = new BigDecimal("0");
-            System.out.print("C" + (i + 1) + "        ");
-            for (int j = 0; j < all.size(); j++) {
-                BigDecimal criterionComparison =
-                        all.get(i).criterionMark.criterionMarkValue.divide(all.get(j).criterionMark
-                        .criterionMarkValue,
-                                RoundingMode.HALF_UP);
-                multiplicationCriterion =
-                        multiplicationCriterion.add(criterionComparison);
-                System.out.print("  " + criterionComparison + "  ");
-
-            }
-
-            BigDecimal squareRoot =
-                    BigDecimal.valueOf(Math.pow(multiplicationCriterion.doubleValue(), 1.0 / all.size())).
-                            setScale(1, RoundingMode.HALF_UP);
-
-
-            System.out.println("     " + squareRoot);
-            System.out.println();
-        }
-    }*/
 
     public static void askOPRforCompareCriterion(List<CriterionComparison> comparisons, Criterion one,
                                                  Criterion two) {
@@ -138,7 +130,6 @@ public class Main {
         CriterionComparison compareReverseTwoCriteria = new CriterionComparison();
         comparisons.add(compareTwoCriteria);
         comparisons.add(compareReverseTwoCriteria);
-        //List<CriterionComparison>
         Scanner OPR_answer = new Scanner(System.in);
 
         System.out.println("Порівняйте критерії \"" + one.criterionName + " та \"" + two.criterionName + "\"");
@@ -235,159 +226,4 @@ public class Main {
     }
 
 
-    /*public static void askOPRforCompareCriterion(List<Criterion> allCriterion) {
-        Scanner OPR_answer = new Scanner(System.in);
-
-        System.out.println("Визначте критерій на оцінку \"гірший\"");
-
-        System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
-                .criterionName +
-                ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
-        String answer;
-        boolean wrongInput;
-        do {
-            answer = OPR_answer.nextLine();
-            wrongInput = !(answer.equals("1") || answer.equals("2") || answer.equals("3"
-            ) || answer.equals("4") || answer.equals("5"));
-            if (wrongInput) {
-                System.out.println("Wrong input, try again");
-            }
-        }
-        while (wrongInput);
-
-        CriterionComparison forOneDivideFive = new CriterionComparison(BigDecimal.valueOf(1.0 / 5.0), "1/5");
-        switch (answer) {
-            case "1" -> allCriterion.get(0).criterionMark = forOneDivideFive;
-            case "2" -> allCriterion.get(1).criterionMark = forOneDivideFive;
-            case "3" -> allCriterion.get(2).criterionMark = forOneDivideFive;
-            case "4" -> allCriterion.get(3).criterionMark = forOneDivideFive;
-            case "5" -> allCriterion.get(4).criterionMark = forOneDivideFive;
-            default -> System.out.println("Wrong input");
-        }
-    }
-
-    public static void askOPRforWorseMark(List<Criterion> allCriterion) {
-        Scanner OPR_answer = new Scanner(System.in);
-
-        System.out.println("Визначте критерій на оцінку \"трішки гірший\"");
-
-        System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
-                .criterionName +
-                ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
-        String answer;
-        boolean wrongInput;
-        do {
-            answer = OPR_answer.nextLine();
-            wrongInput = !(answer.equals("1") || answer.equals("2") || answer.equals("3"
-            ) || answer.equals("4") || answer.equals("5"));
-            if (wrongInput) {
-                System.out.println("Wrong input, try again");
-            }
-        }
-        while (wrongInput);
-        CriterionComparison forOneDivideThree = new CriterionComparison(BigDecimal.valueOf(1.0 / 5.0), "1/3");
-        switch (answer) {
-            case "1" -> allCriterion.get(0).criterionMark = forOneDivideThree;
-            case "2" -> allCriterion.get(1).criterionMark = forOneDivideThree;
-            case "3" -> allCriterion.get(2).criterionMark = forOneDivideThree;
-            case "4" -> allCriterion.get(3).criterionMark = forOneDivideThree;
-            case "5" -> allCriterion.get(4).criterionMark = forOneDivideThree;
-            default -> System.out.println("Wrong input");
-        }
-    }
-
-    public static void askOPRforEqualsMark(List<Criterion> allCriterion) {
-        Scanner OPR_answer = new Scanner(System.in);
-
-        System.out.println("Визначте критерій на оцінку \"дорівнює\"");
-
-        System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
-                .criterionName +
-                ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
-        String answer;
-        boolean wrongInput;
-        do {
-            answer = OPR_answer.nextLine();
-            wrongInput = !(answer.equals("1") || answer.equals("2") || answer.equals("3"
-            ) || answer.equals("4") || answer.equals("5"));
-            if (wrongInput) {
-                System.out.println("Wrong input, try again");
-            }
-        }
-        while (wrongInput);
-        CriterionComparison forOne = new CriterionComparison(BigDecimal.valueOf(1.0), "1.0");
-        switch (answer) {
-            case "1" -> allCriterion.get(0).criterionMark = forOne;
-            case "2" -> allCriterion.get(1).criterionMark = forOne;
-            case "3" -> allCriterion.get(2).criterionMark = forOne;
-            case "4" -> allCriterion.get(3).criterionMark = forOne;
-            case "5" -> allCriterion.get(4).criterionMark = forOne;
-            default -> System.out.println("Wrong input");
-        }
-    }
-
-    public static void askOPRforBetterMark(List<Criterion> allCriterion) {
-        Scanner OPR_answer = new Scanner(System.in);
-
-        System.out.println("Визначте критерій на оцінку \"трішки кращий\"");
-
-        System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
-                .criterionName +
-                ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
-        String answer;
-        boolean wrongInput;
-        do {
-            answer = OPR_answer.nextLine();
-            wrongInput = !(answer.equals("1") || answer.equals("2") || answer.equals("3"
-            ) || answer.equals("4") || answer.equals("5"));
-            if (wrongInput) {
-                System.out.println("Wrong input, try again");
-            }
-        }
-        while (wrongInput);
-        CriterionComparison forThree = new CriterionComparison(BigDecimal.valueOf(3.0), "3.0");
-        switch (answer) {
-            case "1" -> allCriterion.get(0).criterionMark = forThree;
-            case "2" -> allCriterion.get(1).criterionMark = forThree;
-            case "3" -> allCriterion.get(2).criterionMark = forThree;
-            case "4" -> allCriterion.get(3).criterionMark = forThree;
-            case "5" -> allCriterion.get(4).criterionMark = forThree;
-            default -> System.out.println("Wrong input");
-        }
-    }
-
-    public static void askOPRforBestMark(List<Criterion> allCriterion) {
-        Scanner OPR_answer = new Scanner(System.in);
-
-        System.out.println("Визначте критерій на оцінку \"кращий\"");
-
-        System.out.println("Напишіть цифру 1 - " + allCriterion.get(0).criterionName
-                + ", 2 - " + allCriterion.get(1).criterionName + ", 3 - " + allCriterion.get(2)
-                .criterionName +
-                ", 4 - " + allCriterion.get(3).criterionName + ", 5 - " + allCriterion.get(4).criterionName);
-        String answer;
-        boolean wrongInput;
-        do {
-            answer = OPR_answer.nextLine();
-            wrongInput = !(answer.equals("1") || answer.equals("2") || answer.equals("3"
-            ) || answer.equals("4") || answer.equals("5"));
-            if (wrongInput) {
-                System.out.println("Wrong input, try again");
-            }
-        }
-        while (wrongInput);
-        CriterionComparison forFive = new CriterionComparison(BigDecimal.valueOf(5.0), "5.0");
-        switch (answer) {
-            case "1" -> allCriterion.get(0).criterionMark = forFive;
-            case "2" -> allCriterion.get(1).criterionMark = forFive;
-            case "3" -> allCriterion.get(2).criterionMark = forFive;
-            case "4" -> allCriterion.get(3).criterionMark = forFive;
-            case "5" -> allCriterion.get(4).criterionMark = forFive;
-            default -> System.out.println("Wrong input");
-        }
-    }*/
 }

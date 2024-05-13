@@ -9,8 +9,6 @@ public class Criterion {
     List<String> criterionValues = new ArrayList<>();
 
 
-
-
     @Override
     public String toString() {
         return "Критерій: " + criterionName +

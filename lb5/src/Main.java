@@ -50,6 +50,8 @@ public class Main {
         System.out.println();
         System.out.println("Завдання 3");
         System.out.println("Важливость альтернатив за кожним із критеріїв");
+        System.out.println();
+        System.out.println("                                 За критерієм Вартість");
         compareAlternativesToCriteria1(alternativesForCriterion1);
     }
 
@@ -65,7 +67,7 @@ public class Main {
                 multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
                 eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
             }
-            System.out.println("          multiplication = " + multiplicationAlternatives + "              eigenvector" + eigenvector);
+            System.out.println("     multiplication = " + multiplicationAlternatives + "                        eigenvector" + eigenvector);
         }
     }
 

@@ -8,14 +8,26 @@ import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Main {
+    static List<BigDecimal> listCriterionWeight = new ArrayList<>();
+    static List<BigDecimal> listAlternativeWeightForCriterion1 = new ArrayList<>();
+    static List<BigDecimal> listAlternativeWeightForCriterion2 = new ArrayList<>();
+    static List<BigDecimal> listAlternativeWeightForCriterion3 = new ArrayList<>();
+    static List<BigDecimal> listAlternativeWeightForCriterion4 = new ArrayList<>();
+    static List<BigDecimal> listAlternativeWeightForCriterion5 = new ArrayList<>();
+
     public static void main(String[] args) {
         List<Criterion> all = CriterionInit.initialize();
         List<Alternative> alternatives = AlternativeInit.initializeAlternative(all);
-        AlternativeResult[][] alternativesForCriterion1 = AlternativeResultInit.initializeAlternativeForCriterion1();
-        AlternativeResult[][] alternativesForCriterion2 = AlternativeResultInit.initializeAlternativeForCriterion2();
-        AlternativeResult[][] alternativesForCriterion3 = AlternativeResultInit.initializeAlternativeForCriterion3();
-        AlternativeResult[][] alternativesForCriterion4 = AlternativeResultInit.initializeAlternativeForCriterion4();
-        AlternativeResult[][] alternativesForCriterion5 = AlternativeResultInit.initializeAlternativeForCriterion5();
+        AlternativeResult[][] alternativesForCriterion1 =
+                AlternativeResultInit.initializeAlternativeForCriterion1();
+        AlternativeResult[][] alternativesForCriterion2 =
+                AlternativeResultInit.initializeAlternativeForCriterion2();
+        AlternativeResult[][] alternativesForCriterion3 =
+                AlternativeResultInit.initializeAlternativeForCriterion3();
+        AlternativeResult[][] alternativesForCriterion4 =
+                AlternativeResultInit.initializeAlternativeForCriterion4();
+        AlternativeResult[][] alternativesForCriterion5 =
+                AlternativeResultInit.initializeAlternativeForCriterion5();
 
         List<CriterionComparison> comparisons = new ArrayList<>();
         System.out.println("Завдання 2");
@@ -70,18 +82,156 @@ public class Main {
 
         System.out.println();
         System.out.println();
-        System.out.println("                За критерієм № 4 - \"Максимальна кількість користувачів одночасно\"");
+        System.out.println("                За критерієм № 4 - \"Максимальна кількість користувачів " +
+                "одночасно\"");
         compareAlternativesToCriteria4(alternativesForCriterion4);
 
         System.out.println();
         System.out.println();
         System.out.println("                За критерієм № 5 - \"Ступінь автоматизації масштабування\"");
         compareAlternativesToCriteria5(alternativesForCriterion5);
+        System.out.println();
+
+        System.out.println("Завдання 4: ");
+        indicatorQuality();
 
 
     }
+
+    public static void indicatorQuality() {
+        BigDecimal C1 = BigDecimal.ZERO;
+        BigDecimal C2 = BigDecimal.ZERO;
+        BigDecimal C3 = BigDecimal.ZERO;
+        BigDecimal C4 = BigDecimal.ZERO;
+        BigDecimal C5 = BigDecimal.ZERO;
+        BigDecimal C6 = BigDecimal.ZERO;
+        BigDecimal C7 = BigDecimal.ZERO;
+
+
+        C1 = (listCriterionWeight.get(0).multiply(listAlternativeWeightForCriterion1.get(0)).add(C1));
+        C1 = (listCriterionWeight.get(1).multiply(listAlternativeWeightForCriterion2.get(0)).add(C1));
+        C1 = (listCriterionWeight.get(2).multiply(listAlternativeWeightForCriterion3.get(0)).add(C1));
+        C1 = (listCriterionWeight.get(3).multiply(listAlternativeWeightForCriterion4.get(0)).add(C1));
+        C1 = (listCriterionWeight.get(4).multiply(listAlternativeWeightForCriterion5.get(0)).add(C1));
+
+
+        System.out.print(listCriterionWeight.get(0) + " * " + listAlternativeWeightForCriterion1.get(0) + " + ");
+        System.out.print(listCriterionWeight.get(1) + " * " + listAlternativeWeightForCriterion2.get(0) + " + ");
+        System.out.print(listCriterionWeight.get(2) + " * " + listAlternativeWeightForCriterion3.get(0) + " + ");
+        System.out.print(listCriterionWeight.get(3) + " * " + listAlternativeWeightForCriterion4.get(0) + " + ");
+        System.out.println(listCriterionWeight.get(4) + " * " + listAlternativeWeightForCriterion5.get(0) + " = " + C1);
+        System.out.println("Альтернатива 1 = " + C1);
+        System.out.println();
+
+        C2 = (listCriterionWeight.get(0).multiply(listAlternativeWeightForCriterion1.get(1)).add(C2));
+        C2 = (listCriterionWeight.get(1).multiply(listAlternativeWeightForCriterion2.get(1)).add(C2));
+        C2 = (listCriterionWeight.get(2).multiply(listAlternativeWeightForCriterion3.get(1)).add(C2));
+        C2 = (listCriterionWeight.get(3).multiply(listAlternativeWeightForCriterion4.get(1)).add(C2));
+        C2 = (listCriterionWeight.get(4).multiply(listAlternativeWeightForCriterion5.get(1)).add(C2));
+
+        System.out.print(listCriterionWeight.get(0) + " * " + listAlternativeWeightForCriterion1.get(1) + " + ");
+        System.out.print(listCriterionWeight.get(1) + " * " + listAlternativeWeightForCriterion2.get(1) + " + ");
+        System.out.print(listCriterionWeight.get(2) + " * " + listAlternativeWeightForCriterion3.get(1) + " + ");
+        System.out.print(listCriterionWeight.get(3) + " * " + listAlternativeWeightForCriterion4.get(1) + " + ");
+        System.out.println(listCriterionWeight.get(4) + " * " + listAlternativeWeightForCriterion5.get(1) + " = " + C2);
+
+        System.out.println("Альтернатива 2 = " + C2);
+        System.out.println();
+
+        C3 = (listCriterionWeight.get(0).multiply(listAlternativeWeightForCriterion1.get(2)).add(C3));
+        C3 = (listCriterionWeight.get(1).multiply(listAlternativeWeightForCriterion2.get(2)).add(C3));
+        C3 = (listCriterionWeight.get(2).multiply(listAlternativeWeightForCriterion3.get(2)).add(C3));
+        C3 = (listCriterionWeight.get(3).multiply(listAlternativeWeightForCriterion4.get(2)).add(C3));
+        C3 = (listCriterionWeight.get(4).multiply(listAlternativeWeightForCriterion5.get(2)).add(C3));
+
+        System.out.print(listCriterionWeight.get(0) + " * " + listAlternativeWeightForCriterion1.get(2) + " + ");
+        System.out.print(listCriterionWeight.get(1) + " * " + listAlternativeWeightForCriterion2.get(2) + " + ");
+        System.out.print(listCriterionWeight.get(2) + " * " + listAlternativeWeightForCriterion3.get(2) + " + ");
+        System.out.print(listCriterionWeight.get(3) + " * " + listAlternativeWeightForCriterion4.get(2) + " + ");
+        System.out.println(listCriterionWeight.get(4) + " * " + listAlternativeWeightForCriterion5.get(2) + " = " + C3);
+
+        System.out.println("Альтернатива 3 = " + C3);
+        System.out.println();
+
+        C4 = (listCriterionWeight.get(0).multiply(listAlternativeWeightForCriterion1.get(3)).add(C4));
+        C4 = (listCriterionWeight.get(1).multiply(listAlternativeWeightForCriterion2.get(3)).add(C4));
+        C4 = (listCriterionWeight.get(2).multiply(listAlternativeWeightForCriterion3.get(3)).add(C4));
+        C4 = (listCriterionWeight.get(3).multiply(listAlternativeWeightForCriterion4.get(3)).add(C4));
+        C4 = (listCriterionWeight.get(4).multiply(listAlternativeWeightForCriterion5.get(3)).add(C4));
+
+        System.out.print(listCriterionWeight.get(0) + " * " + listAlternativeWeightForCriterion1.get(3) + " + ");
+        System.out.print(listCriterionWeight.get(1) + " * " + listAlternativeWeightForCriterion2.get(3) + " + ");
+        System.out.print(listCriterionWeight.get(2) + " * " + listAlternativeWeightForCriterion3.get(3) + " + ");
+        System.out.print(listCriterionWeight.get(3) + " * " + listAlternativeWeightForCriterion4.get(3) + " + ");
+        System.out.println(listCriterionWeight.get(4) + " * " + listAlternativeWeightForCriterion5.get(3) + " = " + C4);
+
+        System.out.println("Альтернатива 4 = " + C4);
+        System.out.println();
+
+        C5 = (listCriterionWeight.get(0).multiply(listAlternativeWeightForCriterion1.get(4)).add(C5));
+        C5 = (listCriterionWeight.get(1).multiply(listAlternativeWeightForCriterion2.get(4)).add(C5));
+        C5 = (listCriterionWeight.get(2).multiply(listAlternativeWeightForCriterion3.get(4)).add(C5));
+        C5 = (listCriterionWeight.get(3).multiply(listAlternativeWeightForCriterion4.get(4)).add(C5));
+        C5 = (listCriterionWeight.get(4).multiply(listAlternativeWeightForCriterion5.get(4)).add(C5));
+
+        System.out.print(listCriterionWeight.get(0) + " * " + listAlternativeWeightForCriterion1.get(4) + " + ");
+        System.out.print(listCriterionWeight.get(1) + " * " + listAlternativeWeightForCriterion2.get(4) + " + ");
+        System.out.print(listCriterionWeight.get(2) + " * " + listAlternativeWeightForCriterion3.get(4) + " + ");
+        System.out.print(listCriterionWeight.get(3) + " * " + listAlternativeWeightForCriterion4.get(4) + " + ");
+        System.out.println(listCriterionWeight.get(4) + " * " + listAlternativeWeightForCriterion5.get(4) + " = " + C5);
+
+        System.out.println("Альтернатива 5 = " + C5);
+        System.out.println();
+
+        C6 = (listCriterionWeight.get(0).multiply(listAlternativeWeightForCriterion1.get(5)).add(C6));
+        C6 = (listCriterionWeight.get(1).multiply(listAlternativeWeightForCriterion2.get(5)).add(C6));
+        C6 = (listCriterionWeight.get(2).multiply(listAlternativeWeightForCriterion3.get(5)).add(C6));
+        C6 = (listCriterionWeight.get(3).multiply(listAlternativeWeightForCriterion4.get(5)).add(C6));
+        C6 = (listCriterionWeight.get(4).multiply(listAlternativeWeightForCriterion5.get(5)).add(C6));
+
+        System.out.print(listCriterionWeight.get(0) + " * " + listAlternativeWeightForCriterion1.get(5) + " + ");
+        System.out.print(listCriterionWeight.get(1) + " * " + listAlternativeWeightForCriterion2.get(5) + " + ");
+        System.out.print(listCriterionWeight.get(2) + " * " + listAlternativeWeightForCriterion3.get(5) + " + ");
+        System.out.print(listCriterionWeight.get(3) + " * " + listAlternativeWeightForCriterion4.get(5) + " + ");
+        System.out.println(listCriterionWeight.get(4) + " * " + listAlternativeWeightForCriterion5.get(5) + " = " + C6);
+
+        System.out.println("Альтернатива 6 = " + C6);
+        System.out.println();
+
+        C7 = (listCriterionWeight.get(0).multiply(listAlternativeWeightForCriterion1.get(6)).add(C7));
+        C7 = (listCriterionWeight.get(1).multiply(listAlternativeWeightForCriterion2.get(6)).add(C7));
+        C7 = (listCriterionWeight.get(2).multiply(listAlternativeWeightForCriterion3.get(6)).add(C7));
+        C7 = (listCriterionWeight.get(3).multiply(listAlternativeWeightForCriterion4.get(6)).add(C7));
+        C7 = (listCriterionWeight.get(4).multiply(listAlternativeWeightForCriterion5.get(6)).add(C7));
+
+        System.out.print(listCriterionWeight.get(0) + " * " + listAlternativeWeightForCriterion1.get(6) + " + ");
+        System.out.print(listCriterionWeight.get(1) + " * " + listAlternativeWeightForCriterion2.get(6) + " + ");
+        System.out.print(listCriterionWeight.get(2) + " * " + listAlternativeWeightForCriterion3.get(6) + " + ");
+        System.out.print(listCriterionWeight.get(3) + " * " + listAlternativeWeightForCriterion4.get(6) + " + ");
+        System.out.println(listCriterionWeight.get(4) + " * " + listAlternativeWeightForCriterion5.get(6) + " = " + C7);
+
+        System.out.println("Альтернатива 7 = " + C7);
+        System.out.println();
+
+
+        BigDecimal[] arrayС = {C1, C2, C3, C4, C5, C6, C7};
+        BigDecimal max = arrayС[0];
+
+
+        for (int i = 1; i < arrayС.length; i++) {
+            if (arrayС[i].compareTo(max) > 0) {
+                max = arrayС[i];
+                arrayС[i] = max;
+            }
+        }
+        System.out.println("Найкраща альтернатива - " + max);
+    }
+
+
+
     public static void compareAlternativesToCriteria5(AlternativeResult[][] alternativesForCriterion) {
-        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     " +
+                "Власний вектор");
         BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
         List<BigDecimal> eigenvectorList = new ArrayList<>();
         BigDecimal alternativeWeight;
@@ -92,8 +242,10 @@ public class Main {
             BigDecimal multiplicationAlternatives = BigDecimal.ONE;
             for (int j = 0; j < alternativesForCriterion.length; j++) {
                 System.out.print("     " + alternativesForCriterion[i][j]);
-                multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
-                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
+                multiplicationAlternatives =
+                        multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
+                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(),
+                        1.0 / 7.0)).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
             eigenvectorList.add(eigenvector);
@@ -102,14 +254,17 @@ public class Main {
         System.out.println();
         System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
         System.out.println("Вага альтернативи:");
-        for(int n = 0; n < alternativesForCriterion.length; n++) {
-            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+        for (int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight =
+                    eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            listAlternativeWeightForCriterion5.add(alternativeWeight);
             System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria4(AlternativeResult[][] alternativesForCriterion) {
-        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     " +
+                "Власний вектор");
         BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
         List<BigDecimal> eigenvectorList = new ArrayList<>();
         BigDecimal alternativeWeight;
@@ -120,8 +275,10 @@ public class Main {
             BigDecimal multiplicationAlternatives = BigDecimal.ONE;
             for (int j = 0; j < alternativesForCriterion.length; j++) {
                 System.out.print("     " + alternativesForCriterion[i][j]);
-                multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
-                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
+                multiplicationAlternatives =
+                        multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
+                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(),
+                        1.0 / 7.0)).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
             eigenvectorList.add(eigenvector);
@@ -130,14 +287,17 @@ public class Main {
         System.out.println();
         System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
         System.out.println("Вага альтернативи:");
-        for(int n = 0; n < alternativesForCriterion.length; n++) {
-            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+        for (int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight =
+                    eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            listAlternativeWeightForCriterion4.add(alternativeWeight);
             System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria3(AlternativeResult[][] alternativesForCriterion) {
-        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     " +
+                "Власний вектор");
         BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
         List<BigDecimal> eigenvectorList = new ArrayList<>();
         BigDecimal alternativeWeight;
@@ -149,8 +309,10 @@ public class Main {
             BigDecimal multiplicationAlternatives = BigDecimal.ONE;
             for (int j = 0; j < alternativesForCriterion.length; j++) {
                 System.out.print("     " + alternativesForCriterion[i][j]);
-                multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
-                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
+                multiplicationAlternatives =
+                        multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
+                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(),
+                        1.0 / 7.0)).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
             eigenvectorList.add(eigenvector);
@@ -159,14 +321,17 @@ public class Main {
         System.out.println();
         System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
         System.out.println("Вага альтернативи:");
-        for(int n = 0; n < alternativesForCriterion.length; n++) {
-            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+        for (int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight =
+                    eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            listAlternativeWeightForCriterion3.add(alternativeWeight);
             System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria2(AlternativeResult[][] alternativesForCriterion) {
-        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     " +
+                "Власний вектор");
         BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
         List<BigDecimal> eigenvectorList = new ArrayList<>();
         BigDecimal alternativeWeight;
@@ -177,8 +342,10 @@ public class Main {
             BigDecimal multiplicationAlternatives = BigDecimal.ONE;
             for (int j = 0; j < alternativesForCriterion.length; j++) {
                 System.out.print("     " + alternativesForCriterion[i][j]);
-                multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
-                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
+                multiplicationAlternatives =
+                        multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
+                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(),
+                        1.0 / 7.0)).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
             eigenvectorList.add(eigenvector);
@@ -187,14 +354,17 @@ public class Main {
         System.out.println();
         System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
         System.out.println("Вага альтернативи:");
-        for(int n = 0; n < alternativesForCriterion.length; n++) {
-            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+        for (int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight =
+                    eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            listAlternativeWeightForCriterion2.add(alternativeWeight);
             System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria1(AlternativeResult[][] alternativesForCriterion) {
-        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     " +
+                "Власний вектор");
         BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
         List<BigDecimal> eigenvectorList = new ArrayList<>();
         BigDecimal alternativeWeight;
@@ -205,8 +375,10 @@ public class Main {
             BigDecimal multiplicationAlternatives = BigDecimal.ONE;
             for (int j = 0; j < alternativesForCriterion.length; j++) {
                 System.out.print("     " + alternativesForCriterion[i][j]);
-                multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
-                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
+                multiplicationAlternatives =
+                        multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
+                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(),
+                        1.0 / 7.0)).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
             eigenvectorList.add(eigenvector);
@@ -215,8 +387,10 @@ public class Main {
         System.out.println();
         System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
         System.out.println("Вага альтернативи:");
-        for(int n = 0; n < alternativesForCriterion.length; n++) {
-            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+        for (int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight =
+                    eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            listAlternativeWeightForCriterion1.add(alternativeWeight);
             System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
@@ -234,20 +408,21 @@ public class Main {
             BigDecimal eigenvector;
 
 
-
             for (int j = 0; j < all.size(); j++) {
 
                 if (i != j) {
                     CriterionComparison criterionComparison = comparisonsTwoIndex(i, j, comparisons);
                     System.out.print(criterionComparison.criterionStringMark);
-                    multiplicationCriterion = multiplicationCriterion.multiply(criterionComparison.criterionMarkValue);
+                    multiplicationCriterion =
+                            multiplicationCriterion.multiply(criterionComparison.criterionMarkValue);
                 } else {
                     System.out.print("1.0");
                 }
                 System.out.print("     ");
             }
 
-            eigenvector = BigDecimal.valueOf(Math.pow(multiplicationCriterion.doubleValue(), 1.0 / all.size())).setScale(1, RoundingMode.HALF_UP);
+            eigenvector = BigDecimal.valueOf(Math.pow(multiplicationCriterion.doubleValue(),
+                    1.0 / all.size())).setScale(1, RoundingMode.HALF_UP);
             eigenvectorList.add(eigenvector);
             sumEigenvector = sumEigenvector.add(eigenvector);
 
@@ -259,7 +434,10 @@ public class Main {
         System.out.println("Вага критерію:");
         System.out.println("Сума власних векторів: " + sumEigenvector);
         for (int j = 0; j < all.size(); j++) {
-            criterionWeight = eigenvectorList.get(j).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvector, RoundingMode.HALF_UP);
+            criterionWeight =
+                    eigenvectorList.get(j).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvector,
+                            RoundingMode.HALF_UP);
+            listCriterionWeight.add(criterionWeight);
             System.out.println("w" + (j + 1) + " = " + criterionWeight);
         }
 
@@ -284,7 +462,8 @@ public class Main {
         comparisons.add(compareReverseTwoCriteria);
         Scanner OPR_answer = new Scanner(System.in);
 
-        System.out.println("Порівняйте критерії \"" + one.criterionName + " та \"" + two.criterionName + "\"");
+        System.out.println("Порівняйте критерії \"" + one.criterionName + " та \"" + two.criterionName +
+                "\"");
 
         System.out.println("Напишіть цифру, якщо 1 - значно-значно гірше, 2 - значно гірше, " +
                 "3 - гірше, 4 - трішки гірше, 5 - дорівнює, 6 - трішки краще, 7 - краще, 8 - значно краще, " +

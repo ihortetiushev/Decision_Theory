@@ -35,7 +35,7 @@ public class Main {
         System.out.println("Завдання 2");
         System.out.println("Матриця порівнянь для критеріїв");
 
-        /*askOPRforCompareCriterion(comparisons, all.get(0), all.get(1));
+        askOPRforCompareCriterion(comparisons, all.get(0), all.get(1));
         askOPRforCompareCriterion(comparisons, all.get(0), all.get(2));
         askOPRforCompareCriterion(comparisons, all.get(0), all.get(3));
         askOPRforCompareCriterion(comparisons, all.get(0), all.get(4));
@@ -49,37 +49,43 @@ public class Main {
 
         askOPRforCompareCriterion(comparisons, all.get(3), all.get(4));
 
-        relativeImportanceCriteriaScale(comparisons, all);*/
+        relativeImportanceCriteriaScale(comparisons, all);
 
         System.out.println();
         System.out.println("Завдання 3");
         System.out.println("Важливость альтернатив за кожним із критеріїв");
         System.out.println();
-        System.out.println("                                 За критерієм \"Вартість\"");
+        System.out.println("                За критерієм № 1 - \"Вартість\"");
         compareAlternativesToCriteria1(alternativesForCriterion1);
 
         System.out.println();
         System.out.println();
-        System.out.println("                                 За критерієм \"Відмовостійкість\"");
+        System.out.println("                За критерієм № 2 - \"Відмовостійкість\"");
         compareAlternativesToCriteria2(alternativesForCriterion2);
 
         System.out.println();
         System.out.println();
-        System.out.println("                                 За критерієм \"Максимальний час відгуку системи\"");
+        System.out.println("                За критерієм № 3 - \"Максимальний час відгуку системи\"");
         compareAlternativesToCriteria3(alternativesForCriterion3);
 
         System.out.println();
         System.out.println();
-        System.out.println("                                 За критерієм \"Максимальна кількість користувачів одночасно\"");
+        System.out.println("                За критерієм № 4 - \"Максимальна кількість користувачів одночасно\"");
         compareAlternativesToCriteria4(alternativesForCriterion4);
 
         System.out.println();
         System.out.println();
-        System.out.println("                                 За критерієм \"Ступінь автоматизації масштабування\"");
+        System.out.println("                За критерієм № 5 - \"Ступінь автоматизації масштабування\"");
         compareAlternativesToCriteria5(alternativesForCriterion5);
+
+
     }
     public static void compareAlternativesToCriteria5(AlternativeResult[][] alternativesForCriterion) {
         System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
+        List<BigDecimal> eigenvectorList = new ArrayList<>();
+        BigDecimal alternativeWeight;
+
         for (int i = 0; i < alternativesForCriterion.length; i++) {
             System.out.print("A" + (i + 1) + "          ");
             BigDecimal eigenvector = BigDecimal.ZERO;
@@ -90,11 +96,24 @@ public class Main {
                 eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
+            eigenvectorList.add(eigenvector);
+            sumEigenvectorForAlternativesCriterion = sumEigenvectorForAlternativesCriterion.add(eigenvector);
+        }
+        System.out.println();
+        System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
+        System.out.println("Вага альтернативи:");
+        for(int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria4(AlternativeResult[][] alternativesForCriterion) {
         System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
+        List<BigDecimal> eigenvectorList = new ArrayList<>();
+        BigDecimal alternativeWeight;
+
         for (int i = 0; i < alternativesForCriterion.length; i++) {
             System.out.print("A" + (i + 1) + "          ");
             BigDecimal eigenvector = BigDecimal.ZERO;
@@ -105,11 +124,25 @@ public class Main {
                 eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
+            eigenvectorList.add(eigenvector);
+            sumEigenvectorForAlternativesCriterion = sumEigenvectorForAlternativesCriterion.add(eigenvector);
+        }
+        System.out.println();
+        System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
+        System.out.println("Вага альтернативи:");
+        for(int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria3(AlternativeResult[][] alternativesForCriterion) {
         System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
+        List<BigDecimal> eigenvectorList = new ArrayList<>();
+        BigDecimal alternativeWeight;
+
+
         for (int i = 0; i < alternativesForCriterion.length; i++) {
             System.out.print("A" + (i + 1) + "          ");
             BigDecimal eigenvector = BigDecimal.ZERO;
@@ -120,11 +153,24 @@ public class Main {
                 eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
+            eigenvectorList.add(eigenvector);
+            sumEigenvectorForAlternativesCriterion = sumEigenvectorForAlternativesCriterion.add(eigenvector);
+        }
+        System.out.println();
+        System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
+        System.out.println("Вага альтернативи:");
+        for(int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria2(AlternativeResult[][] alternativesForCriterion) {
         System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
+        List<BigDecimal> eigenvectorList = new ArrayList<>();
+        BigDecimal alternativeWeight;
+
         for (int i = 0; i < alternativesForCriterion.length; i++) {
             System.out.print("A" + (i + 1) + "          ");
             BigDecimal eigenvector = BigDecimal.ZERO;
@@ -135,11 +181,24 @@ public class Main {
                 eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
+            eigenvectorList.add(eigenvector);
+            sumEigenvectorForAlternativesCriterion = sumEigenvectorForAlternativesCriterion.add(eigenvector);
+        }
+        System.out.println();
+        System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
+        System.out.println("Вага альтернативи:");
+        for(int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
     public static void compareAlternativesToCriteria1(AlternativeResult[][] alternativesForCriterion) {
         System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        BigDecimal sumEigenvectorForAlternativesCriterion = BigDecimal.ZERO;
+        List<BigDecimal> eigenvectorList = new ArrayList<>();
+        BigDecimal alternativeWeight;
+
         for (int i = 0; i < alternativesForCriterion.length; i++) {
             System.out.print("A" + (i + 1) + "          ");
             BigDecimal eigenvector = BigDecimal.ZERO;
@@ -150,6 +209,15 @@ public class Main {
                 eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
             }
             System.out.println("           " + eigenvector);
+            eigenvectorList.add(eigenvector);
+            sumEigenvectorForAlternativesCriterion = sumEigenvectorForAlternativesCriterion.add(eigenvector);
+        }
+        System.out.println();
+        System.out.println("Сума власних векторів: " + sumEigenvectorForAlternativesCriterion);
+        System.out.println("Вага альтернативи:");
+        for(int n = 0; n < alternativesForCriterion.length; n++) {
+            alternativeWeight = eigenvectorList.get(n).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvectorForAlternativesCriterion, RoundingMode.HALF_UP);
+            System.out.println("w" + (n + 1) + " = " + alternativeWeight);
         }
     }
 
@@ -192,7 +260,7 @@ public class Main {
         System.out.println("Сума власних векторів: " + sumEigenvector);
         for (int j = 0; j < all.size(); j++) {
             criterionWeight = eigenvectorList.get(j).setScale(2, RoundingMode.HALF_UP).divide(sumEigenvector, RoundingMode.HALF_UP);
-            System.out.println("w" + j + " = " + criterionWeight);
+            System.out.println("w" + (j + 1) + " = " + criterionWeight);
         }
 
     }

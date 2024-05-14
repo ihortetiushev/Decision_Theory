@@ -12,6 +12,8 @@ public class Main {
         List<Criterion> all = CriterionInit.initialize();
         List<Alternative> alternatives = AlternativeInit.initializeAlternative(all);
         AlternativeResult[][] alternativesForCriterion1 = AlternativeResultInit.initializeAlternativeForCriterion1();
+        AlternativeResult[][] alternativesForCriterion2 = AlternativeResultInit.initializeAlternativeForCriterion2();
+
 
         List<CriterionComparison> comparisons = new ArrayList<>();
         System.out.println("Завдання 2");
@@ -51,10 +53,28 @@ public class Main {
         System.out.println("Завдання 3");
         System.out.println("Важливость альтернатив за кожним із критеріїв");
         System.out.println();
-        System.out.println("                                 За критерієм Вартість");
+        System.out.println("                                 За критерієм \"Вартість\"");
         compareAlternativesToCriteria1(alternativesForCriterion1);
-    }
 
+        System.out.println();
+        System.out.println();
+        System.out.println("                                 За критерієм \"Відмовостійкість\"");
+        compareAlternativesToCriteria2(alternativesForCriterion2);
+    }
+    public static void compareAlternativesToCriteria2(AlternativeResult[][] alternativesForCriterion) {
+        System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");
+        for (int i = 0; i < alternativesForCriterion.length; i++) {
+            System.out.print("A" + (i + 1) + "          ");
+            BigDecimal eigenvector = BigDecimal.ZERO;
+            BigDecimal multiplicationAlternatives = BigDecimal.ONE;
+            for (int j = 0; j < alternativesForCriterion.length; j++) {
+                System.out.print("     " + alternativesForCriterion[i][j]);
+                multiplicationAlternatives = multiplicationAlternatives.multiply(alternativesForCriterion[i][j].alternativeMarkValue);
+                eigenvector = BigDecimal.valueOf(Math.pow(multiplicationAlternatives.doubleValue(), 1.0 / 7.0 )).setScale(1, RoundingMode.HALF_UP);
+            }
+            System.out.println("     multiplication = " + multiplicationAlternatives + "                        eigenvector" + eigenvector);
+        }
+    }
 
     public static void compareAlternativesToCriteria1(AlternativeResult[][] alternativesForCriterion) {
         System.out.println("Альтернатива      А1      А2      А3      А4      А5      А6      А7     Власний вектор");

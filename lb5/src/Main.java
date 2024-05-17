@@ -37,11 +37,6 @@ public class Main {
         System.out.println();
 
 
-        System.out.println(all.get(0).criterionMark);
-        System.out.println(all.get(1).criterionMark);
-        System.out.println(all.get(2).criterionMark);
-        System.out.println(all.get(3).criterionMark);
-        System.out.println(all.get(4).criterionMark);
 
         System.out.println();
         System.out.println("Завдання 2");

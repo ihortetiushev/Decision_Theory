@@ -40,12 +40,7 @@ public class Main {
 
 
     public static void condorceRule(List<AlternativesVote> allAlternativesVote) {
-       /* Integer count = alternativeWins.get(stringIntegerEntry.getKey());
-        if(count == null) {
-            alternativeWins.put(stringIntegerEntry.getKey(), 1);
-        } else {
-            alternativeWins.put(stringIntegerEntry.getKey(), count++);
-        }*/
+
         System.out.println("N = 6*5/2 = 15 попарних порівнянь:");
         System.out.println("AB, AC, AD, AE, AF, BC, BD, BE, BF, CD, CE, CF, DE, DF, EF");
         System.out.println();
@@ -56,6 +51,7 @@ public class Main {
         twoAlternative(allAlternativesVote, "A", "F");
 
         twoAlternative(allAlternativesVote, "B", "C");
+        //не работает с BD
         twoAlternative(allAlternativesVote, "B", "D");
         twoAlternative(allAlternativesVote, "B", "E");
         twoAlternative(allAlternativesVote, "A", "F");
@@ -76,7 +72,12 @@ public class Main {
         Map.Entry<String, Integer> stringIntegerEntry = calculateMax(listAlternativesWithCondition);
         Map<String, Integer> alternativeWins = new HashMap<>();
         //alternativeWins.get(stringIntegerEntry.getKey());
-
+        Integer count = alternativeWins.get(stringIntegerEntry.getKey());
+        if(count == null) {
+            alternativeWins.put(stringIntegerEntry.getKey(), 1);
+        } else {
+            alternativeWins.put(stringIntegerEntry.getKey(), count++);
+        }
         System.out.println("Альтернатива-переможниця - " + stringIntegerEntry.getKey() + ", Кількість голосів - "+stringIntegerEntry.getValue() );
     }
 

@@ -33,7 +33,7 @@ public class AlternativesVoteInit {
         AlternativesVote column5 = new AlternativesVote();
         column5.voteAmount = 18;
         column5.alternatives = List.of(alternatives.get(2), alternatives.get(4),
-                alternatives.get(1), alternatives.get(3), alternatives.get(0), alternatives.get(5));
+                alternatives.get(3), alternatives.get(1), alternatives.get(0), alternatives.get(5));
         alternativesVoteList.add(column5);
 
         AlternativesVote column6 = new AlternativesVote();

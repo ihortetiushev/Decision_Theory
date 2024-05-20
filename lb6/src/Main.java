@@ -53,7 +53,7 @@ public class Main {
         twoAlternative(allAlternativesVote, "B", "C", alternativeWins);
         twoAlternative(allAlternativesVote, "B", "D", alternativeWins);
         twoAlternative(allAlternativesVote, "B", "E", alternativeWins);
-        twoAlternative(allAlternativesVote, "A", "F", alternativeWins);
+        twoAlternative(allAlternativesVote, "B", "F", alternativeWins);
 
         twoAlternative(allAlternativesVote, "C", "D", alternativeWins);
         twoAlternative(allAlternativesVote, "C", "E", alternativeWins);
@@ -73,7 +73,7 @@ public class Main {
         for (Map.Entry<String, Integer> entry : alternativeWins.entrySet()) {
             if(entry.getValue() == maxWinCount){
                 maxAlternative = entry;
-                System.out.println("Альтернатива-переможниця - " + maxAlternative.getKey() + ", Кількість голосів - " + maxAlternative.getValue());
+                System.out.println("Альтернатива-переможниця - " + maxAlternative.getKey() + ", Кількість перемог у дуелі - " + maxAlternative.getValue());
                 break;
             }
         }
@@ -119,10 +119,10 @@ public class Main {
             if (value > max.getValue()) {
                 max = entry;
             }
-            System.out.println("Альтернатива - " + key + ", Кількість голосів - " + value);
+            System.out.println("Альтернатива - " + key + ", Кількість очок - " + value);
         }
 
-        System.out.println("Альтернатива-переможниця - " + max.getKey() + ", Кількість голосів - " + max.getValue());
+        System.out.println("Альтернатива-переможниця - " + max.getKey() + ", Кількість очок - " + max.getValue());
     }
 
 

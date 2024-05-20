@@ -34,51 +34,62 @@ public class Main {
 
         System.out.println("Завдання 6, за правилом Кондорсе (дуелі)");
         condorceRule(allAlternativesVote);
-
-
     }
 
 
     public static void condorceRule(List<AlternativesVote> allAlternativesVote) {
+        Map<String, Integer> alternativeWins = new HashMap<>();
+        List<Integer> winsCount = new ArrayList<>();
 
         System.out.println("N = 6*5/2 = 15 попарних порівнянь:");
         System.out.println("AB, AC, AD, AE, AF, BC, BD, BE, BF, CD, CE, CF, DE, DF, EF");
         System.out.println();
-        twoAlternative(allAlternativesVote, "A", "B");
-        twoAlternative(allAlternativesVote, "A", "C");
-        twoAlternative(allAlternativesVote, "A", "D");
-        twoAlternative(allAlternativesVote, "A", "E");
-        twoAlternative(allAlternativesVote, "A", "F");
+        twoAlternative(allAlternativesVote, "A", "B", alternativeWins);
+        twoAlternative(allAlternativesVote, "A", "C", alternativeWins);
+        twoAlternative(allAlternativesVote, "A", "D", alternativeWins);
+        twoAlternative(allAlternativesVote, "A", "E", alternativeWins);
+        twoAlternative(allAlternativesVote, "A", "F", alternativeWins);
 
-        twoAlternative(allAlternativesVote, "B", "C");
-        //не работает с BD
-        twoAlternative(allAlternativesVote, "B", "D");
-        twoAlternative(allAlternativesVote, "B", "E");
-        twoAlternative(allAlternativesVote, "A", "F");
+        twoAlternative(allAlternativesVote, "B", "C", alternativeWins);
+        twoAlternative(allAlternativesVote, "B", "D", alternativeWins);
+        twoAlternative(allAlternativesVote, "B", "E", alternativeWins);
+        twoAlternative(allAlternativesVote, "A", "F", alternativeWins);
 
-        twoAlternative(allAlternativesVote, "C", "D");
-        twoAlternative(allAlternativesVote, "C", "E");
-        twoAlternative(allAlternativesVote, "C", "F");
+        twoAlternative(allAlternativesVote, "C", "D", alternativeWins);
+        twoAlternative(allAlternativesVote, "C", "E", alternativeWins);
+        twoAlternative(allAlternativesVote, "C", "F", alternativeWins);
 
-        twoAlternative(allAlternativesVote, "D", "E");
-        twoAlternative(allAlternativesVote, "D", "F");
+        twoAlternative(allAlternativesVote, "D", "E", alternativeWins);
+        twoAlternative(allAlternativesVote, "D", "F", alternativeWins);
 
-        twoAlternative(allAlternativesVote, "E", "F");
+        twoAlternative(allAlternativesVote, "E", "F", alternativeWins);
+        System.out.println();
+        System.out.println("Альтенатива та кількість перемог у дуелі " + alternativeWins);
+        winsCount.addAll(alternativeWins.values());
+        Collections.sort(winsCount, Comparator.reverseOrder());
+        Integer maxWinCount = winsCount.get(0);
+        Map.Entry<String, Integer> maxAlternative;
 
+        for (Map.Entry<String, Integer> entry : alternativeWins.entrySet()) {
+            if(entry.getValue() == maxWinCount){
+                maxAlternative = entry;
+                System.out.println("Альтернатива-переможниця - " + maxAlternative.getKey() + ", Кількість голосів - " + maxAlternative.getValue());
+                break;
+            }
+        }
     }
 
-    public static void twoAlternative(List<AlternativesVote> allAlternativesVote, String alternativeNameOne, String alternativeNameTwo) {
+    public static void twoAlternative(List<AlternativesVote> allAlternativesVote, String alternativeNameOne, String alternativeNameTwo,  Map<String, Integer> alternativeWins) {
         List<AlternativesVote> listAlternativesWithCondition = findListAlternativesWithCondition(allAlternativesVote, Map.of(alternativeNameOne, 0, alternativeNameTwo, 0));
         Map.Entry<String, Integer> stringIntegerEntry = calculateMax(listAlternativesWithCondition);
-        Map<String, Integer> alternativeWins = new HashMap<>();
-        //alternativeWins.get(stringIntegerEntry.getKey());
+
         Integer count = alternativeWins.get(stringIntegerEntry.getKey());
         if(count == null) {
             alternativeWins.put(stringIntegerEntry.getKey(), 1);
         } else {
-            alternativeWins.put(stringIntegerEntry.getKey(), count++);
+            alternativeWins.put(stringIntegerEntry.getKey(), ++count);
         }
-        System.out.println("Альтернатива-переможниця - " + stringIntegerEntry.getKey() + ", Кількість голосів - "+stringIntegerEntry.getValue() );
+        System.out.println("Альтернатива-переможниця - " + stringIntegerEntry.getKey() + ", Кількість голосів - " + stringIntegerEntry.getValue());
     }
 
 
